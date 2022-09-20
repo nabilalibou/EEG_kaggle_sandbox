@@ -1,0 +1,26 @@
+{
+  "CSP + Log-reg": {
+    "eval_accuracy": 0.75,
+    "eval_roc_auc": 0.75
+  },
+  "CSP + LDA": {
+    "eval_accuracy": 0.675,
+    "eval_roc_auc": 0.675
+  },
+  "Cov + TSLR": {
+    "eval_accuracy": 0.65,
+    "eval_roc_auc": 0.65
+  },
+  "Cov + TSLDA": {
+    "eval_accuracy": 0.325,
+    "eval_roc_auc": 0.325
+  },
+  "Cov + FgMDM": {
+    "eval_accuracy": 0.65,
+    "eval_roc_auc": 0.65
+  },
+  "CSP + TS + PCA + LR": {
+    "eval_accuracy": 0.75,
+    "eval_roc_auc": 0.75
+  }
+}
