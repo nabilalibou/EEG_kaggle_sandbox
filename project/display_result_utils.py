@@ -84,7 +84,7 @@ def save_barplot(scores_results_dict, methods, subj_nbr, fig_dir, mode):
         for pipeline, results in pipelines.items():
             ax_y.append(results[0])
             deviation.append(results[1])
-
+        score_name = score_name.replace(f'{mode}_', '')
         # To space out each x points
         #ax_xx = [width*(len(scores_results_dict)*i + counter) for i in x]
         ax_x = x*(len(scores_results_dict)*(1+bar_width/2))*bar_width+bar_width*counter

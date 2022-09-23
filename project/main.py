@@ -15,7 +15,7 @@ import glob
 
 data_path = "./data/"
 fig_dir = "./results/"
-number_of_subject = 10  # 10
+number_of_subject = 1  # 10
 plot_erp = False
 # See constants.py
 clf_selection = ["CSP + Log-reg", "CSP + LDA", "Cov + TSLR", "Cov + TSLDA",

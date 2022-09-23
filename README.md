@@ -35,7 +35,7 @@ Classification results (selected score metrics) for each subject are displayed o
 console, reported in a JSON file and plotted on a grouped bar plot like this one:
 
 <p align="center">
-<img src="docs\readme_img\patient01_eval.png" width="500" height="374">
+<img src="docs\readme_img\patient01_eval.png" width="600" height="450">
 </p>
 
 ### Future improvements:
