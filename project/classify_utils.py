@@ -1,4 +1,6 @@
-
+"""
+Contains the functions to perform cross-validation and classification.
+"""
 
 from sklearn.model_selection import KFold, StratifiedKFold
 from sklearn.model_selection import cross_validate, train_test_split

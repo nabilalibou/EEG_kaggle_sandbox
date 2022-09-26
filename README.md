@@ -5,10 +5,12 @@ Repository used to test several preprocessing/classification pipelines on brain 
 
 ## How to Run it?
 
-### Installing
+### Installing & run it
 ```
 git clone https://github.com/Nabil-AL/eeg-clf_sandbox.git
 pip install -r requirements.txt
+cd eeg-clf_sandbox/project
+python3 main.py
 ```
 
 ### Dataset available (only one currently):
@@ -44,6 +46,8 @@ console, reported in a JSON file and plotted on a grouped bar plot like this one
 
 + Implement Hyperparameter tuning via GridSearch for every classification pipeline.
 
++ Create a report.pdf to interpret the results and analyze the performance of the 
+classifiers.  
 
 + Add others dataset to play with.  
 
@@ -67,9 +71,6 @@ Add others popular classifiers; XGBoost Classifier, Random forest ...
 + Add some possibility to plot the epochs/trials and their characteristics 
 (ERPs, topomap, PSD).  
 
-
-+ Have an automatically filled report with the results and plots and write an analysis 
-on the performance of each classifier.
 
 
 

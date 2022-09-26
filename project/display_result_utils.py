@@ -1,3 +1,7 @@
+"""
+Contains the functions dedicated to print and plot the results as well as store them
+in a .json file
+"""
 
 import json
 import numpy as np

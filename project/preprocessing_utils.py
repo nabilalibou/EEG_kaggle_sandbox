@@ -1,5 +1,6 @@
- # Data details : The signals were sampled at 512 Hz and initially filtered with 0.1
-# to 100 Hz pass-band filter and a notch filter at 50 Hz during data acquisition
+"""
+Contains the function dedicated to the loading, filtering and shaping of the data.
+"""
 
 from scipy.io import loadmat
 from scipy.signal import butter, lfilter

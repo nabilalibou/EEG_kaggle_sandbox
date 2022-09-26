@@ -1,4 +1,12 @@
-
+"""
+Script used to test several preprocessing/classification pipelines on brain signals
+(EEG/EMG/MEG datasets).
+This script is the main.py to run after having select the dataset as well as the
+classification pipelines and score metrics from constants.py.
+Data are first loaded before going through preprocessing. It is then possible to perform
+cross-validation with the different classifiers before evaluating them, plot them and
+save their performance in a json file.
+"""
 
 from project.constants import *
 from project.preprocessing_utils import (load_data_from_mat, butter_bandpass_filter,
