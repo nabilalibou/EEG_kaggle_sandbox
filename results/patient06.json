@@ -1,15 +1,18 @@
 {
   "CSP + Log-reg": {
     "eval_accuracy": 0.65,
-    "eval_roc_auc": 0.65
+    "eval_roc_auc": 0.65,
+    "eval_kappa": 0.3
   },
   "CSP + LDA": {
     "eval_accuracy": 0.675,
-    "eval_roc_auc": 0.675
+    "eval_roc_auc": 0.675,
+    "eval_kappa": 0.35
   },
   "Cov + TSLR": {
     "eval_accuracy": 0.65,
-    "eval_roc_auc": 0.65
+    "eval_roc_auc": 0.65,
+    "eval_kappa": 0.3
   },
   "Cov + TSLDA": {
     "eval_accuracy": 0.55,
@@ -17,10 +20,36 @@
   },
   "Cov + FgMDM": {
     "eval_accuracy": 0.65,
-    "eval_roc_auc": 0.65
+    "eval_roc_auc": 0.65,
+    "eval_kappa": 0.3
   },
   "CSP + TS + PCA + LR": {
     "eval_accuracy": 0.6,
-    "eval_roc_auc": 0.6
+    "eval_roc_auc": 0.6,
+    "eval_kappa": 0.2
+  },
+  "CSP + TSLDA": {
+    "eval_accuracy": 0.725,
+    "eval_kappa": 0.45
+  },
+  "CSP + TSLR": {
+    "eval_accuracy": 0.65,
+    "eval_kappa": 0.3
+  },
+  "ERPCov + TSLR": {
+    "eval_accuracy": 0.725,
+    "eval_kappa": 0.45
+  },
+  "ERPCov + CSP + TSLR": {
+    "eval_accuracy": 0.65,
+    "eval_kappa": 0.3
+  },
+  "ERPCov + CSP + TS + PCA + LR": {
+    "eval_accuracy": 0.6,
+    "eval_kappa": 0.2
+  },
+  "XdawnCov + CSP + TS + PCA + LR": {
+    "eval_accuracy": 0.7,
+    "eval_kappa": 0.4
   }
 }

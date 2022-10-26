@@ -11,7 +11,7 @@ save their performance in a json file.
 from project.constants import *
 from project.preprocessing_utils import (load_data_from_mat, butter_bandpass_filter,
                                          prepare_data)
-from project.classify_utils import cross_val, manual_cross_val, evaluate
+from project.classify_utils import cross_val, custom_cross_val, evaluate
 from project.model_utils import *
 from project.display_result_utils import print_results, save_barplot, write_report
 
@@ -20,15 +20,20 @@ import mne
 from scipy.io import loadmat
 import glob
 
+os.environ["CUDA_VISIBLE_DEVICES"]="-1"
 
 data_path = "./data/"
 fig_dir = "./results/"
-number_of_subject = 1  # 10
+number_of_subject = 8  # 10
+mode = "eval"   # test eval
+doCustomCV = "False"
 plot_erp = False
 # See constants.py
-clf_selection = ["CSP + Log-reg", "CSP + LDA", "Cov + TSLR", "Cov + TSLDA",
-                 "Cov + FgMDM", "CSP + TS + PCA + LR"]
-score_selection = ['accuracy', 'roc_auc']
+# clf_selection = ["CSP + Log-reg", "CSP + LDA", "Cov + TSLR", "Cov + TSLDA",
+#                  "Cov + FgMDM", "CSP + TS + PCA + LR"]
+clf_selection = ["ERPCov + FgMDM","ERPCov + CSP + TS + PCA + LR", "XdawnCov + FgMDM", "XdawnCov + CSP + TS + PCA + LR"]
+#"SCNNb",
+score_selection = ['accuracy', 'kappa']
 
 clf_dict = {}
 for clf in clf_selection:
@@ -113,17 +118,21 @@ for i in range(0, number_of_subject):
                                   sample_rate,
                                   t_low=-default_t_clf)
 
-    # results_dict_cv = cross_val(clf_dict, X, y, score_selection, 5, return_train_score)
+    if mode == "test":
+        if doCustomCV:
+            results_dict_customcv = custom_cross_val(clf_dict, X, y, score_dict, 5)
+        else:
+            results_dict_cv = cross_val(clf_dict, X, y, score_dict, 5,
+                                        return_train_score)
+    else:
+        results_dict_eval, score_list = evaluate(clf_dict, X, y, score_dict, X_eval, y_eval)
 
-    # results_dict_manualcv = manual_cross_val(clf_dict, X, y, score_dict, 5)
-
-    results_dict_eval = evaluate(clf_dict, X, y, score_dict, X_eval, y_eval)
-
+    ## Results
     write_report(results_dict_eval, f"{fig_dir}patient{subj_nbr}.json")
 
     scores_results_dict, methods = print_results(subj_nbr,
                                                  results_dict_eval,
-                                                 mode="eval",
+                                                 mode,
                                                  return_train_score=False)
 
-    save_barplot(scores_results_dict, methods, subj_nbr, fig_dir, mode="eval")
+    save_barplot(scores_results_dict, methods, subj_nbr, fig_dir, mode)

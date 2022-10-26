@@ -3,4 +3,6 @@ mne >= 0.20.8
 numpy >= 1.19.4
 pyriemann >= 0.3.0
 scikit_learn >= 0.23.2
+scikeras >= 0.8.0
 scipy >= 1.4.1
+tensorflow >= 2.0

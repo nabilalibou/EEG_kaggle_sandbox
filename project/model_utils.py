@@ -1,163 +1,171 @@
 
+import numpy as np
+import tensorflow as tf
+from keras import layers
+from keras.constraints import unit_norm
+from sklearn.preprocessing import FunctionTransformer
+from sklearn.base import BaseEstimator, TransformerMixin
 
 
-
-## Hyperparameter tuning
-# https://www.datasklr.com/select-classification-methods/support-vector-machines
-
-
-# Parameter tuning with GridSearchCV
-
-#######################
-### K-Nearest Neighbors
-#######################
-# estimator_KNN = KNeighborsClassifier(algorithm='auto')
-# parameters_KNN = {
-#     'n_neighbors': (1, 10, 1),
-#     'leaf_size': (20, 40, 1),
-#     'p': (1, 2),
-#     'weights': ('uniform', 'distance'),
-#     'metric': ('minkowski', 'chebyshev'),
-# }
-#     # with GridSearch
-#     grid_search_KNN = GridSearchCV(
-#     estimator=estimator_KNN,
-#     param_grid=parameters_KNN,
-#     scoring='accuracy',
-#     n_jobs=-1,
-#     cv=5
-# )
-# #Parameter setting that gave the best results on the hold out data.
-# print(grid_search_KNN.best_params_ )
+# class Reshape_4d(TransformerMixin, BaseEstimator):
 #
-# # Parameter tuning with GridSearchCV
+#     def __init__(self):
+#         print("init")
 #
-# #######################
-# ### Support Vector Machines
-# #######################
+#     def fit(self, X, y):
+#         return self
 #
-# estimator_SVM = SVC(gamma='scale')
-# parameters_SVM = {
-#     'C': (0.1, 15.0, 0.1),
-#     'kernel': ('linear', 'poly', 'rbf', 'sigmoid'),
-#     'coef0': (0.0, 10.0, 1.0),
-#     'shrinking': (True, False),
+#     def transform(self, X):
+#         X_ = X.copy()
+#         X_ = X.reshape(X.shape[0], X.shape[1], X.shape[2], 1)
+#         return X_
 #
-# }
-# # with GridSearch
-# grid_search_SVM = GridSearchCV(
-#     estimator=estimator_SVM,
-#     param_grid=parameters_SVM,
-#     scoring='accuracy',
-#     n_jobs=-1,
-#     cv=5
-# )
-# #Parameter setting that gave the best results on the hold out data.
-# print(grid_search_SVM.best_params_)
+#
+#
+def reshape_3d(X):
+
+    return np.squeeze(X)
+
+def reshape_4d(X, y):
+
+    return X.reshape(X.shape[0], X.shape[1], X.shape[2], 1)
 
 
-### PCA
-"""
-https://github.com/d-bi/software-control/blob/master/playground.ipynb
-"""
+def SCNNa(num_chans=32, time_samples=256, learning_rate=1e-3):
+    """
+    Shallow CNN
+    """
+    model = tf.keras.Sequential()
+    model.add(tf.keras.layers.Conv2D(
+        filters=50, kernel_size=(25, 1), padding='same', activation='elu',
+        input_shape=(num_chans, time_samples, 1)))
+    model.add(tf.keras.layers.MaxPooling2D(pool_size=(5, 1), strides=(3, 1)))
+    model.add(tf.keras.layers.Flatten())
+    model.add(tf.keras.layers.Dense(1, activation='sigmoid'))
 
-# Hyperparameter optimization using grid search (Demo from sklearn)
-#
-# """
-# Two generic approaches to parameter search are provided in scikit-learn: for given values,
-# GridSearchCV exhaustively considers all parameter combinations, while RandomizedSearchCV
-# can sample a given number of candidates from a parameter space with a specified
-# distribution. Both these tools have successive halving counterparts HalvingGridSearchCV and
-# HalvingRandomSearchCV, which can be much faster at finding a good parameter combination.
-# """
-# # Exhaustive Grid Search
-# param_grid = [
-#   {'C': [1, 10, 100, 1000], 'kernel': ['linear']},
-#   {'C': [1, 10, 100, 1000], 'gamma': [0.001, 0.0001], 'kernel': ['rbf']},
-#  ]
-#
-# # Randomized Parameter Optimization
-# """
-# Specifying how parameters should be sampled is done using a dictionary. Additionally, a
-# computation budget, being the number of sampled candidates or sampling iterations, is
-# specified using the n_iter parameter. For each parameter, either a distribution over
-# possible values or a list of discrete choices (which will be sampled uniformly) can be
-# specified.
-# For continuous parameters, such as C above, it is important to specify a continuous
-# distribution to take full advantage of the randomization.
-# """
-# {'C': scipy.stats.expon(scale=100), 'gamma': scipy.stats.expon(scale=.1),
-#   'kernel': ['rbf'], 'class_weight':['balanced', None]}
-#
-# # Halving and choosing min_resources + number of candidates
-# """
-# number of resources that is used at each iteration depends on the min_resources
-# parameter. If you have a lot of resources available but start with a low number of
-# resources, some of them might be wasted (i.e. not used).
-# Here, The search process will only use 80 resources at most, while our maximum amount of
-# available resources is n_samples=1000. Here, we have min_resources = r_0 = 20.
-# For HalvingGridSearchCV, by default, the min_resources parameter is set to ‘exhaust’.
-# This means that min_resources is automatically set such that the last iteration can use
-# as many resources as possible, within the max_resources limit.
-# """
-# from sklearn.datasets import make_classification
-# from sklearn.svm import SVC
-# from sklearn.experimental import enable_halving_search_cv  # noqa
-# from sklearn.model_selection import HalvingGridSearchCV
-# param_grid= {'kernel': ('linear', 'rbf'),
-#              'C': [1, 10, 100]}
-# base_estimator = SVC(gamma='scale')
-# X, y = make_classification(n_samples=1000)
-# sh = HalvingGridSearchCV(base_estimator, param_grid, cv=5,
-#                          factor=2, min_resources=20).fit(X, y)
-#
-# sh.best_estimator_
-# sh.n_resources_
-# sh = HalvingGridSearchCV(base_estimator, param_grid, cv=5,
-#                          factor=2, min_resources='exhaust').fit(X, y)
-# sh.n_resources_
-#
-#
-# # for linear svm
-# """
-# A continuous log-uniform random variable is available through loguniform. This is a
-# continuous version of log-spaced parameters. For example to specify C above,
-# loguniform(1, 100) can be used instead of [1, 10, 100] or np.logspace(0, 2, num=1000).
-# """
-# from sklearn.utils.fixes import loguniform
-# param_grid_linear_svm = { 'linearsvc__C' : np.logspace(-4, 3, 15)}
-# #param_grid_linear_svm = { 'linearsvc__C' : loguniform(1e-4, 1e-3)} #linearsvc need to be list or np array
-# # lda, auto shrinkage performs pretty well mostly
-# """
-# Shrinkage is a form of regularization used to improve the estimation of covariance
-# matrices in situations where the number of training samples is small compared to the
-# number of features. In this scenario, the empirical sample covariance is a poor
-# estimator, and shrinkage helps improving the generalization performance of the classifier.
-# Shrinkage LDA can be used by setting the shrinkage parameter of the LinearDiscriminantAnalysis
-# class to ‘auto’. This automatically determines the optimal shrinkage parameter in an
-#  analytic way following the lemma introduced by Ledoit and Wolf [2]. Note that currently
-#  shrinkage only works when setting the solver parameter to ‘lsqr’ or ‘eigen’.
-# """
-# shrinkage = list(np.arange(0,1.01,0.1))
-# shrinkage.append('auto')
-# param_grid_lda = {'lineardiscriminantanalysis__shrinkage': shrinkage}
-# #n_jobs = None  # for multicore parallel processing, set it to 1 if cause memory issues, for full utilization set to -1
-# grids_linear_svm= GridSearchCV(clf["CSP + LinSVM"],
-#                             param_grid=param_grid_linear_svm, scoring=scorer)
-# grids_linear_svm_auc= GridSearchCV(clf["CSP + LinSVM"],
-#                             param_grid=param_grid_linear_svm, scoring='roc_auc')
-#
-# grids_lda = GridSearchCV(clf["CSP + LDA"],
-#                         param_grid=param_grid_lda, scoring=scorer)
-#
-# grids_linear_svm.fit(x_train, y_train)
-# grids_linear_svm_auc.fit(x_train, y_train)
-#
-# print('LinearSVM: Maximum Cross Validation Score = ',
-#       round(grids_linear_svm.best_score_, 3))
-# print('LinearSVM: Maximum Cross Validation Score = ',
-#       round(grids_linear_svm_auc.best_score_, 3))
-#
-# grids_lda.fit(x_train, y_train)
-# print('LDA: Maximum Cross Validation Score = ', round(grids_lda.best_score_, 3))
+    optimizer = tf.keras.optimizers.Adam(lr=learning_rate)
+    model.compile(
+        loss='binary_crossentropy', optimizer=optimizer, metrics=['binary_accuracy']
+    )
+    return model
 
+
+# need these for ShallowConvNet
+def square(x):
+    return tf.keras.backend.square(x)
+
+
+def log(x):
+    return tf.keras.backend.log(tf.keras.backend.clip(x, min_value=1e-7,
+                                                      max_value=10000))
+
+
+def SCNNb(num_chans=32, time_samples=256, learning_rate=1e-3, dropout_rate=0.5):
+    """
+    Structure from Keras implementation of the Shallow Convolutional Network as described
+    in Schirrmeister et. al. (2017), Human Brain Mapping. Original code :
+    https://github.com/vlawhern/arl-eegmodels
+    """
+    # start the model
+    model = tf.keras.Sequential()
+    model.add(tf.keras.layers.Conv2D(40, (1, 25),
+                    input_shape=(num_chans, time_samples, 1), padding='same',
+                    kernel_constraint=tf.keras.constraints.max_norm(2., axis=(0, 1, 2))))
+    model.add(tf.keras.layers.Conv2D(40, (num_chans, 1), use_bias=False,
+                    kernel_constraint=tf.keras.constraints.max_norm(2., axis=(0, 1, 2))))
+    model.add(tf.keras.layers.BatchNormalization(axis=1, epsilon=1e-05, momentum=0.9))
+    model.add(tf.keras.layers.Activation(square))
+    model.add(tf.keras.layers.AveragePooling2D(pool_size=(1, 75), strides=(1, 15)))
+    model.add(tf.keras.layers.Activation(log))
+    model.add(tf.keras.layers.Dropout(dropout_rate))
+    model.add(tf.keras.layers.Flatten())
+    model.add(tf.keras.layers.Dense(
+        1,
+        kernel_constraint=tf.keras.constraints.max_norm(0.5),
+        activation='sigmoid')
+    )
+
+    optimizer = tf.keras.optimizers.Adam(lr=learning_rate)
+    model.compile(
+        loss='binary_crossentropy', optimizer=optimizer, metrics=['binary_accuracy']
+    )
+    return model
+
+
+def basic_DNN(num_chans=32, time_samples=256, num_hidden=16, activation='relu',
+              learning_rate=1e-3):
+
+    model = tf.keras.Sequential()
+    model.add(tf.keras.layers.Flatten(input_shape=(num_chans, time_samples, 1)))
+    model.add(layers.Dense(num_hidden, activation=activation))
+    model.add(layers.Dense(1, activation='sigmoid'))
+
+    optimizer = tf.keras.optimizers.Adam(lr=learning_rate)
+    model.compile(
+        loss='binary_crossentropy', optimizer=optimizer, metrics=['binary_accuracy']
+    )
+    return model
+
+
+def DNN(num_chans=32, time_samples=256, activation='relu', learning_rate=1e-3):
+
+    model = tf.keras.Sequential()
+    model.add(tf.keras.layers.Flatten(input_shape=(num_chans, time_samples, 1)))
+    model.add(layers.Dense(60, activation=activation))
+    model.add(layers.Dense(30, activation=activation))
+    model.add(layers.Dense(1, activation='sigmoid'))
+
+    optimizer = tf.keras.optimizers.Adam(lr=learning_rate)
+    model.compile(
+        loss='binary_crossentropy', optimizer=optimizer, metrics=['binary_accuracy']
+    )
+
+    return model
+
+
+def eegnet(num_chans=32, time_samples=256, dropout_rate=0.5, sampling_rate=512, F1=8,
+           D=2, P1=4, learning_rate=1e-3):
+    """
+    EEGNet inspired by this code:
+    https://github.com/vlawhern/arl-eegmodels which is the Keras
+    implementation of : http://iopscience.iop.org/article/10.1088/1741-2552/aace8c/meta
+
+    :param num_chans: Number of channels
+    :param time_samples: Number of time points
+    :param dropout_rate: Dropout fraction
+    :param sampling_rate: Sampling rate
+    :param F1: Number of temporal filters (F1) to learn.
+               Number of pointwise filters F2 = F1 * D.
+    :param D: Number of spatial filters to learn within each temporal convolution.
+    :param P1: width of the input windows for the average pooling.
+    :param learning_rate: Learning rate.
+    :return: model
+    """
+    model = tf.keras.Sequential()
+    kern_length = int(sampling_rate/2)
+    model.add(layers.Conv2D(F1, (1, kern_length), padding="same",
+                            input_shape=(num_chans, time_samples, 1), use_bias=False))
+    model.add(layers.BatchNormalization())
+    model.add(layers.DepthwiseConv2D((num_chans, 1), padding="valid", depth_multiplier=D,
+                                     depthwise_constraint=unit_norm(), use_bias=False))
+    model.add(layers.BatchNormalization())
+    model.add(layers.Activation('elu'))
+    model.add(layers.AveragePooling2D(pool_size=(1, P1), padding="valid"))
+    model.add(layers.Dropout(dropout_rate))
+    F2 = F1*D
+    model.add(layers.SeparableConv2D(F2, (1, int(kern_length/2)), use_bias=False,
+                                     padding="same"))
+    model.add(layers.BatchNormalization())
+    model.add(layers.Activation('elu'))
+    P2 = int(P1*2)
+    model.add(layers.AveragePooling2D(pool_size=(1, P2)))
+    model.add(layers.Dropout(dropout_rate))
+    model.add(layers.Flatten())
+    model.add(layers.Dense(1))
+    model.add(layers.Activation('sigmoid'))
+
+    optimizer = tf.keras.optimizers.Adam(lr=learning_rate)
+    model.compile(loss="binary_crossentropy", optimizer=optimizer,
+                  metrics=["binary_accuracy"])
+
+    return model
