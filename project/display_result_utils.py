@@ -48,7 +48,7 @@ def print_results(subj_nbr, results_dict, mode="test", return_train_score=False)
     return scores_results_dict, methods
 
 
-def write_report(results_dict, report_path):
+def write_subj_report(results_dict, report_path):
 
     try:
         report_file = open(report_path, "r")
@@ -67,6 +67,33 @@ def write_report(results_dict, report_path):
                 for score_name, value in scores_value.items():
                     data[pipeline][score_name] = round(np.mean(value), 3)
             json.dump(data, json_file, indent=2)
+    except TypeError:
+        raise TypeError("⚠️  Unable to serialize the object")
+
+
+def write_final_report(results_list, report_path):
+
+    try:
+        with open(report_path, 'w') as json_file:
+            subj = 0
+            dict_all = {"average": {}}
+            for result_dict_subj in results_list:
+                subj += 1
+                dict_all[f"subject_{subj}"] = {}
+                for pipeline, scores_value in result_dict_subj.items():
+                    dict_all[f"subject_{subj}"][pipeline] = {}
+                    if pipeline not in dict_all["average"]:
+                        dict_all["average"][pipeline] = {}
+                    for score_name, value in scores_value.items():
+                        dict_all[f"subject_{subj}"][pipeline][score_name] = \
+                            round(np.mean(value), 3)
+                        if score_name not in dict_all["average"][pipeline].keys():
+                            dict_all["average"][pipeline][score_name] = 0
+                        dict_all["average"][pipeline][score_name] += np.mean(value)
+                        if subj == len(results_list):
+                            dict_all["average"][pipeline][score_name] = \
+                                round(dict_all["average"][pipeline][score_name]/subj, 3)
+            json.dump(dict_all, json_file, indent=2)
     except TypeError:
         raise TypeError("⚠️  Unable to serialize the object")
 

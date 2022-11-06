@@ -5,7 +5,7 @@ import copy
 import numpy as np
 from sklearn.model_selection import KFold, StratifiedKFold
 from sklearn.model_selection import cross_validate, train_test_split
-from sklearn.metrics import (make_scorer, get_scorer_names, confusion_matrix,
+from sklearn.metrics import (make_scorer, get_scorer_names, _scorer, confusion_matrix,
                              ConfusionMatrixDisplay)
 from sklearn.utils import shuffle
 from tensorflow import keras
@@ -22,22 +22,31 @@ def cross_val(clf_dict, X, y, score_dict, n_folds = 5, return_train_score=False)
     (not like ShuffleSplit) so no data overlap.
     :return:
     """
+
     # https://scikit-learn.org/stable/modules/model_evaluation.html#common-cases-predefined-values
     available_scorers = get_scorer_names()
     for score, score_val in score_dict.items():
         if score in available_scorers:
             score_dict[score] = score
         else:
-            score_dict[score] = make_scorer(score_val)
+            # if it is not already a scorer
+            if not isinstance(score_val, _scorer._PredictScorer):
+                score_dict[score] = make_scorer(score_val)
 
     cv = KFold(n_folds, shuffle=True)
     # cv = StratifiedKFold(n_folds, shuffle=True)  # if epoch small
     res_dict = {}
+    print(f"{'*' * 10} {n_folds}-folds Cross-validation Results {'*' * 10}")
     for clf_name, clf_value in clf_dict.items():
         res = cross_validate(clf_value, X, y, cv=cv, scoring=score_dict,
                              return_train_score=return_train_score,
                              return_estimator=True)
         res_dict[clf_name] = res
+        print(f"-> {clf_name}:")
+        for cv_key, cv_value in res_dict[clf_name].items():
+            if "test" in cv_key:
+                avg_score = sum(cv_value) / len(cv_value)
+                print(f"{cv_key} : {round(avg_score, 3)}")
 
     return res_dict
 
@@ -52,7 +61,9 @@ def custom_cross_val(clf_dict, X, y, score_dict, n_folds=5):
     kf = KFold(n_folds, shuffle=True)  # Kfold nice for small dataset
     # kf = StratifiedKFold(n_folds, shuffle=True)
     res_dict = {}
+    print(f"{'*'*10} {n_folds}-folds Custom CV Results {'*'*10}")
     for clf_name, clf_value in clf_dict.items():
+        print(f"-> {clf_name}:")
         res_dict[clf_name] = {}
         cnt_loop = 0
         for train_index, test_index in kf.split(X):
@@ -66,6 +77,10 @@ def custom_cross_val(clf_dict, X, y, score_dict, n_folds=5):
                 res_dict[clf_name][f"test_{score_name}"].append(scorer(y_test, y_pred))
 
             cnt_loop += 1
+
+        for score_name, value in res_dict[clf_name].items():
+            avg_score = sum(value) / len(value)
+            print(f"{score_name} : {round(avg_score, 3)}")
 
     return res_dict
 
@@ -94,7 +109,7 @@ def evaluate(clf_dict, X, y, score_dict, X_eval, y_eval, num_epochs=300):
         print("goo")
         res_dict[clf_name] = {}
         X, y = shuffle(X, y)
-        # If the classifier is a Neural Network
+        # # If the classifier is a Neural Network
         # if (char in clf_name for char in NN_clfs):
         #     print("one time")
         #     #X_reshaped = X.reshape(X.shape[0], X.shape[1], X.shape[2], 1)
@@ -123,8 +138,10 @@ def evaluate(clf_dict, X, y, score_dict, X_eval, y_eval, num_epochs=300):
         # )
         # disp.plot()
         # plt.show()
+        print("score")
         for score_name, scorer in score_dict.items():
+            print("score 1")
             res_dict[clf_name][f"eval_{score_name}"] = scorer(y_eval, y_pred)
-        #score_list.append(res_dict)
+        score_list.append(res_dict)
 
     return res_dict, score_list

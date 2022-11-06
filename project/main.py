@@ -13,7 +13,8 @@ from project.preprocessing_utils import (load_data_from_mat, butter_bandpass_fil
                                          prepare_data)
 from project.classify_utils import cross_val, custom_cross_val, evaluate
 from project.model_utils import *
-from project.display_result_utils import print_results, save_barplot, write_report
+from project.display_result_utils import (print_results, save_barplot, write_subj_report,
+                                          write_final_report)
 
 import os
 import mne
@@ -21,18 +22,19 @@ from scipy.io import loadmat
 import glob
 
 os.environ["CUDA_VISIBLE_DEVICES"]="-1"
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # or any {'0', '1', '2'}, to filter out tf logs
 
 data_path = "./data/"
 fig_dir = "./results/"
-number_of_subject = 8  # 10
-mode = "eval"   # test eval
-doCustomCV = "False"
+number_of_subject = 2  # 8
+mode = "test"   # test or eval
+doCustomCV = True
 plot_erp = False
 # See constants.py
 # clf_selection = ["CSP + Log-reg", "CSP + LDA", "Cov + TSLR", "Cov + TSLDA",
 #                  "Cov + FgMDM", "CSP + TS + PCA + LR"]
-clf_selection = ["ERPCov + FgMDM","ERPCov + CSP + TS + PCA + LR", "XdawnCov + FgMDM", "XdawnCov + CSP + TS + PCA + LR"]
-#"SCNNb",
+#clf_selection = ["ERPCov + FgMDM","ERPCov + CSP + TS + PCA + LR", "XdawnCov + FgMDM", "XdawnCov + CSP + TS + PCA + LR"]
+clf_selection = ["DNN", "Cov + DNN"]
 score_selection = ['accuracy', 'kappa']
 
 clf_dict = {}
@@ -71,17 +73,18 @@ if not os.path.exists(fig_dir):
     except OSError:
         print(f"creation of the directory {fig_dir} failed")
 
-for i in range(0, number_of_subject):
-    if i < 9:
-        subj_nbr = f"0{i+1}"
+results_list = []
+for i in range(1, number_of_subject+1):
+    if i < 10:
+        subj_nbr = f"0{i}"
     else:
-        subj_nbr = i+1
+        subj_nbr = i
     train_file = str(f"{data_path}parsed_P{subj_nbr}T.mat")
     eval_file = str(f"{data_path}parsed_P{subj_nbr}E.mat")
-    print(f"treating subject {i+1}")
+    print(f"treating subject {i}")
 
     # get the eeg info if they exist
-    if i == 0:
+    if i == 1:
         try:
             # ndarray (1,1)
             cue_time = loadmat(train_file)["cueAt"][0][0]
@@ -121,17 +124,25 @@ for i in range(0, number_of_subject):
     if mode == "test":
         if doCustomCV:
             results_dict_customcv = custom_cross_val(clf_dict, X, y, score_dict, 5)
+            results_dict = results_dict_customcv
         else:
             results_dict_cv = cross_val(clf_dict, X, y, score_dict, 5,
                                         return_train_score)
+            results_dict = results_dict_cv
     else:
         results_dict_eval, score_list = evaluate(clf_dict, X, y, score_dict, X_eval, y_eval)
+        results_dict = results_dict_eval
+
+    results_list.append(results_dict)
 
     ## Results
-    write_report(results_dict_eval, f"{fig_dir}patient{subj_nbr}.json")
+    write_subj_report(results_list, f"{fig_dir}patient{subj_nbr}.json")
+
+    if i == number_of_subject:
+        write_final_report(results_list, f"{fig_dir}final_report.json")
 
     scores_results_dict, methods = print_results(subj_nbr,
-                                                 results_dict_eval,
+                                                 results_dict,
                                                  mode,
                                                  return_train_score=False)
 

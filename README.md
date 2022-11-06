@@ -39,10 +39,10 @@ available:
 <ins>Score metrics</ins>: accuracy, precision, roc auc, Cohen’s kappa.  
 
 <ins>Classification methods</ins>:  
-Classics ones: LDA (+shrinkage), SVM, kNN, linear regression (+shrinkage), MDM.
+Classics ones: LDA (+shrinkage), SVM, kNN, linear regression (+shrinkage), MDM.  
 Artificial neural networks: ShallowConvNet, EEGNet and DNN.  
-Possibilities of spatial filtering (CSP, geodesic filtering etc) or dimension reduction (PCA)
-and using others features like covariance (ex: covariance-based classification using Riemannian geometry). 
+Possibilities of spatial filtering (CSP, geodesic filtering etc) dimension reduction (PCA)
+and feature extraction (ex: for covariance-based classification using Riemannian geometry). 
 
 ### Results:
 
@@ -63,7 +63,7 @@ Top 3 model for classification within subject:
 |                    | Kappa   | 0.70 | 0.75 | 0.75 | 0.50 | 0.50 | 0.20 | 0.40 | 0.80 | 0.57 |
 
 The classic Riemannian pipeline (spatial covariance + projection into the tangent space 
-to be classifier) with the standard CSP procedure gives the best results.
+to be classifier) with the standard CSP procedure beforehand gives the best results.
 
 ### Future improvements:
 

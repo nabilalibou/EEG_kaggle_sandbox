@@ -140,8 +140,8 @@ EEG-based Brain-Computer Interfaces. Journal of Neural Engineering, vol. 15, p. 
 """
 
 NN_clfs = ["DNN", "SCNN", "EEGNet"]
-Reshape_3D = FunctionTransformer(reshape_3d)
-Reshape_4D = FunctionTransformer(reshape_4d)
+# Reshape_3D = FunctionTransformer(reshape_3d)
+# Reshape_4D = FunctionTransformer(reshape_4d)
 
 all_clf_dict = {
     "Vect + KNN": make_pipeline(Vectorizer(), KNeighborsClassifier()),
@@ -235,35 +235,66 @@ all_clf_dict = {
     "EEGNet": make_pipeline(KerasClassifier(
         model=eegnet(num_chans, time_samples, dropout_rate, default_sample_rate, 8, 2,
         4, learning_rate), epochs=num_epochs, batch_size=batch_size, verbose=False)),
-    "XdawnCov + basic_DNN": make_pipeline(XdawnCovariances(estimator='oas'),
-                                          Reshape_4D,
+    "Cov + basic_DNN": make_pipeline(Covariances(), Reshape_4d(),
                                           KerasClassifier(
-                                              model=basic_DNN(num_chans, time_samples,
+                                              model=basic_DNN(12, 12,
                                                               16, 'relu',
                                                               learning_rate),
-                                          epochs=num_epochs, batch_size=batch_size,
-                                          verbose=False)),
-    "XdawnCov + DNN": make_pipeline(Reshape_3D, XdawnCovariances(estimator='oas'),
-                                    Reshape_4D,
+                                              epochs=num_epochs, batch_size=batch_size,
+                                              verbose=False)),
+    "Cov + DNN": make_pipeline(Covariances(), Reshape_4d(),
                                     KerasClassifier(
-                                        model=DNN(num_chans, time_samples, 'relu',
+                                        model=DNN(12, 12, 'relu',
                                                   learning_rate), epochs=num_epochs,
-                                                  batch_size=batch_size, verbose=False)),
-    "XdawnCov + SCNNa": make_pipeline(Reshape_3D, XdawnCovariances(estimator='oas'),
-                                      Reshape_4D,
+                                        batch_size=batch_size, verbose=False)),
+    "Cov + SCNNa": make_pipeline(Covariances(), Reshape_4d(),
                                       KerasClassifier(
                                           model=SCNNa(num_chans, time_samples,
                                                       learning_rate), epochs=num_epochs,
-                                                batch_size=batch_size, verbose=False)),
-    "XdawnCov + SCNNb": make_pipeline(Reshape_3D, XdawnCovariances(estimator='oas'),
-                                      Reshape_4D,
+                                          batch_size=batch_size, verbose=False)),
+    "Cov + SCNNb": make_pipeline(Covariances(), Reshape_4d(),
                                       KerasClassifier(
                                           model=SCNNb(num_chans, time_samples,
                                                       learning_rate, dropout_rate),
                                           epochs=num_epochs, batch_size=batch_size,
                                           verbose=False)),
-    "XdawnCov + EEGNet": make_pipeline(Reshape_3D, XdawnCovariances(estimator='oas'),
-                                       Reshape_4D,
+    "Cov + EEGNet": make_pipeline(Covariances(), Reshape_4d(),
+                                       KerasClassifier(
+                                           model=eegnet(num_chans, time_samples,
+                                                        dropout_rate,
+                                                        default_sample_rate, 8, 2,
+                                                        4, learning_rate),
+                                           epochs=num_epochs, batch_size=batch_size,
+                                           verbose=False)),
+    "XdawnCov + basic_DNN": make_pipeline(XdawnCovariances(estimator='oas'),
+                                          Reshape_4d(),
+                                          KerasClassifier(
+                                              model=basic_DNN(16, 16,
+                                                              16, 'relu',
+                                                              learning_rate),
+                                          epochs=num_epochs, batch_size=batch_size,
+                                          verbose=False)),
+    "XdawnCov + DNN": make_pipeline(XdawnCovariances(estimator='oas'),
+                                    Reshape_4d(),
+                                    KerasClassifier(
+                                        model=DNN(16, 16, 'relu',
+                                                  learning_rate), epochs=num_epochs,
+                                                  batch_size=batch_size, verbose=False)),
+    "XdawnCov + SCNNa": make_pipeline(XdawnCovariances(estimator='oas'),
+                                      Reshape_4d(),
+                                      KerasClassifier(
+                                          model=SCNNa(num_chans, time_samples,
+                                                      learning_rate), epochs=num_epochs,
+                                                batch_size=batch_size, verbose=False)),
+    "XdawnCov + SCNNb": make_pipeline(XdawnCovariances(estimator='oas'),
+                                      Reshape_4d(),
+                                      KerasClassifier(
+                                          model=SCNNb(num_chans, time_samples,
+                                                      learning_rate, dropout_rate),
+                                          epochs=num_epochs, batch_size=batch_size,
+                                          verbose=False)),
+    "XdawnCov + EEGNet": make_pipeline(XdawnCovariances(estimator='oas'),
+                                       Reshape_4d(),
                                        KerasClassifier(
                                            model=eegnet(num_chans, time_samples,
                                                         dropout_rate,

@@ -7,28 +7,37 @@ from sklearn.preprocessing import FunctionTransformer
 from sklearn.base import BaseEstimator, TransformerMixin
 
 
-# class Reshape_4d(TransformerMixin, BaseEstimator):
-#
-#     def __init__(self):
-#         print("init")
-#
-#     def fit(self, X, y):
-#         return self
-#
-#     def transform(self, X):
-#         X_ = X.copy()
-#         X_ = X.reshape(X.shape[0], X.shape[1], X.shape[2], 1)
-#         return X_
-#
-#
-#
-def reshape_3d(X):
+class Reshape_4d(BaseEstimator, TransformerMixin):
 
-    return np.squeeze(X)
+    def fit(self, X, y=None):
+        return self
 
-def reshape_4d(X, y):
+    def transform(self, X, y=None):
+        X_ = X.copy()
+        X_ = X.reshape(X.shape[0], X.shape[1], X.shape[2], 1)
+        #print(np.shape(X_))
+        return X_
 
-    return X.reshape(X.shape[0], X.shape[1], X.shape[2], 1)
+
+class Reshape_3d(BaseEstimator, TransformerMixin):
+
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X, y=None):
+        X_ = X.copy()
+        X_ = np.squeeze(X.copy())
+        #print(np.shape(X_))
+        return X_
+
+
+# def reshape_3d(X):
+#
+#     return np.squeeze(X)
+#
+# def reshape_4d(X, y):
+#
+#     return X.reshape(X.shape[0], X.shape[1], X.shape[2], 1)
 
 
 def SCNNa(num_chans=32, time_samples=256, learning_rate=1e-3):
