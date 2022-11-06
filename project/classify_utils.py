@@ -85,7 +85,7 @@ def custom_cross_val(clf_dict, X, y, score_dict, n_folds=5):
     return res_dict
 
 
-def evaluate(clf_dict, X, y, score_dict, X_eval, y_eval, num_epochs=300):
+def evaluate(clf_dict, X, y, score_dict, X_eval, y_eval, num_runs=5, num_epochs=300):
     """
     Train on whole dataset
     (
@@ -103,45 +103,32 @@ def evaluate(clf_dict, X, y, score_dict, X_eval, y_eval, num_epochs=300):
     :return: res_dict:
     """
     res_dict = {}
-    score_list = []
-    #for i in range(0, 5):
     for clf_name, clf_value in clf_dict.items():
-        print("goo")
+        y_acc = np.zeros((X_eval.shape[0]), dtype="float64")
         res_dict[clf_name] = {}
-        X, y = shuffle(X, y)
-        # # If the classifier is a Neural Network
-        # if (char in clf_name for char in NN_clfs):
-        #     print("one time")
-        #     #X_reshaped = X.reshape(X.shape[0], X.shape[1], X.shape[2], 1)
-        #     X_ev_reshaped = X_eval.reshape(X_eval.shape[0], X_eval.shape[1],
-        #                                 X_eval.shape[2], 1)
-        #     y_reshaped = y.reshape(-1, 1)
-        #     print("fit")
-        #     clf_value.fit(X, y)
-        #     # clf_value.fit(X, y,  batch_size, num_epochs,
-        #     #               validation_data=(X_eval, y_eval), verbose=False)
-        #     y_pred = clf_value.predict(X_ev_reshaped)
-        #     y_pred = (np.rint(np.squeeze(y_pred))).astype(int)
-        # else:
-        clf_value.fit(X, y)
-        y_pred = clf_value.predict(X_eval)
-        print("print")
-        print(f"{'%'*8} Evaluate: Prediction vs Truth for the '{clf_name}' pipeline "
-              f"{'%'*8}")
-        print(f"y_pred:\n{y_pred}")
-        print(f"y_eval:\n{y_eval}")
+        for run in range(0, num_runs):
+            X_, y_ = shuffle(X, y)
+            clf_value.fit(X_, y_)
+            y_pred = clf_value.predict(X_eval)
+            y_acc += y_pred
+            # cm = confusion_matrix(y_pred, y_eval, labels=clf_value.classes_)
+            # disp = ConfusionMatrixDisplay(
+            #     confusion_matrix=cm,
+            #     display_labels = clf_value.classes_
+            # )
+            # disp.plot()
+            # plt.show()
+            if run == num_runs-1:
+                y_acc /= num_runs
+                y_avg = (np.rint(np.squeeze(y_acc))).astype(int)
+                print(
+                    f"{'%' * 8} Evaluate: Prediction vs Truth for the '{clf_name}' "
+                    f"pipeline "
+                    f"{'%' * 8}")
+                print(f"y_pred:\n{y_avg}")
+                print(f"y_eval:\n{y_eval}")
+                for score_name, scorer in score_dict.items():
+                    res_dict[clf_name][f"eval_{score_name}"] = scorer(y_eval, y_avg)
+                    print(f"{score_name}: {scorer(y_eval, y_avg)}")
 
-        # cm = confusion_matrix(y_pred, y_eval, labels=clf_value.classes_)
-        # disp = ConfusionMatrixDisplay(
-        #     confusion_matrix=cm,
-        #     display_labels = clf_value.classes_
-        # )
-        # disp.plot()
-        # plt.show()
-        print("score")
-        for score_name, scorer in score_dict.items():
-            print("score 1")
-            res_dict[clf_name][f"eval_{score_name}"] = scorer(y_eval, y_pred)
-        score_list.append(res_dict)
-
-    return res_dict, score_list
+    return res_dict

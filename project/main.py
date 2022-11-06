@@ -27,8 +27,8 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # or any {'0', '1', '2'}, to filter ou
 data_path = "./data/"
 fig_dir = "./results/"
 number_of_subject = 2  # 8
-mode = "test"   # test or eval
-doCustomCV = True
+mode = "eval"   # test or eval
+doCustomCV = True  # use cross_val() or custom_cross_val()
 plot_erp = False
 # See constants.py
 # clf_selection = ["CSP + Log-reg", "CSP + LDA", "Cov + TSLR", "Cov + TSLDA",
@@ -130,13 +130,13 @@ for i in range(1, number_of_subject+1):
                                         return_train_score)
             results_dict = results_dict_cv
     else:
-        results_dict_eval, score_list = evaluate(clf_dict, X, y, score_dict, X_eval, y_eval)
+        results_dict_eval = evaluate(clf_dict, X, y, score_dict, X_eval, y_eval)
         results_dict = results_dict_eval
 
     results_list.append(results_dict)
 
     ## Results
-    write_subj_report(results_list, f"{fig_dir}patient{subj_nbr}.json")
+    write_subj_report(results_dict, f"{fig_dir}patient{subj_nbr}.json")
 
     if i == number_of_subject:
         write_final_report(results_list, f"{fig_dir}final_report.json")
