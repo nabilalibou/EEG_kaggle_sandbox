@@ -70,15 +70,18 @@ Top 3 model for classification within subject:
 |                    | Kappa   | 0.60 | 0.65 | 0.55 | 0.30 | 0.50 | 0.30 | 0.65 | 0.40 | 0.49     |
 
 
-The classic Riemannian pipeline consisting of : 
+=> The classic Riemannian pipeline consisting of : 
 - Computing the spatial covariances
 - Projection into the tangent space 
 - Variable selection procedure (dimension reduction with Principal Component Analysis).
-- Linear Discriminant Analysis classification 
+- Linear Discriminant Analysis classification.   
+
 With the standard CSP (Common Spatial Pattern) procedure beforehand seems to give the 
 best results.  
-The popular pipeline CSP followed by a logistic regression comes second.  
-Geodesic filtering achieved in tangent space with a Linear Discriminant Analysis applied 
+
+=> The popular pipeline CSP followed by a logistic regression comes second.  
+
+=> Geodesic filtering achieved in tangent space with a Linear Discriminant Analysis applied 
 on spatial covariances before a classification with Minimum Distance to Mean gave good 
 results as well.  
 
