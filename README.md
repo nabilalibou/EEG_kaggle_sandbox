@@ -69,9 +69,14 @@ Top 3 model for classification within subject:
 | Cov + FgMDM        | Acc     | 80.0 | 82.5 | 77.5 | 65.0 | 75.0 | 65.0 | 82.5 | 70.0 | 74.7     |
 |                    | Kappa   | 0.60 | 0.65 | 0.55 | 0.30 | 0.50 | 0.30 | 0.65 | 0.40 | 0.49     |
 
-The classic Riemannian pipeline (spatial covariance + projection into the tangent space 
-to be classifier) with the standard CSP (Common Spatial Pattern) procedure beforehand 
-gives the best results.  
+
+The classic Riemannian pipeline consisting of : 
+- Computing the spatial covariances
+- Projection into the tangent space 
+- Variable selection procedure (dimension reduction with Principal Component Analysis).
+- Linear Discriminant Analysis classification 
+With the standard CSP (Common Spatial Pattern) procedure beforehand seems to give the 
+best results.  
 The popular pipeline CSP followed by a logistic regression comes second.  
 Geodesic filtering achieved in tangent space with a Linear Discriminant Analysis applied 
 on spatial covariances before a classification with Minimum Distance to Mean gave good 
