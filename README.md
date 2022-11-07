@@ -67,10 +67,12 @@ Top 3 model for classification within subject:
 |                    | Kappa   | 0.60 | 0.65 | 0.55 | 0.30 | 0.50 | 0.30 | 0.65 | 0.40 | 0.49     |
 
 The classic Riemannian pipeline (spatial covariance + projection into the tangent space 
-to be classifier) with the standard CSP procedure beforehand gives the best results.  
-The popular CSP followed by a Logistic regression comes second.  
-Geodesic filtering applied on spatial covariances before a classification with Minimum 
-Distance to Mean gave good results as well.  
+to be classifier) with the standard CSP (Common Spatial Pattern) procedure beforehand 
+gives the best results.  
+The popular pipeline CSP followed by a logistic regression comes second.  
+Geodesic filtering achieved in tangent space with a Linear Discriminant Analysis applied 
+on spatial covariances before a classification with Minimum Distance to Mean gave good 
+results as well.  
 
 
 ### Future improvements:
