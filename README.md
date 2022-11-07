@@ -57,13 +57,21 @@ console, reported in a JSON file and plotted on a grouped bar plot like this one
 
 Top 3 model for classification within subject:
 
-|                    | Patient | P01  | P02  | P03  | P04  | P05  | P06  | P07  | P08  | Avg  |
-|--------------------|---------|------|------|------|------|------|------|------|------|------|
-| CSP + TS + PCA +LR | Acc     | 85.0 | 87.5 | 87.5 | 75.0 | 75.0 | 60.0 | 70.0 | 90.0 | 78.7 |
-|                    | Kappa   | 0.70 | 0.75 | 0.75 | 0.50 | 0.50 | 0.20 | 0.40 | 0.80 | 0.57 |
+|                    | Patient | P01  | P02  | P03  | P04  | P05  | P06  | P07  | P08  | Avg      |
+|--------------------|---------|------|------|------|------|------|------|------|------|----------|
+| CSP + TS + PCA +LR | Acc     | 85.0 | 87.5 | 87.5 | 75.0 | 75.0 | 60.0 | 70.0 | 90.0 | **78.7** |
+|                    | Kappa   | 0.70 | 0.75 | 0.75 | 0.50 | 0.50 | 0.20 | 0.40 | 0.80 | **0.57** |
+| CSP + Log-reg      | Acc     | 80.0 | 85.0 | 87.5 | 75.0 | 75.0 | 65.0 | 67.5 | 75.0 | 76.3     |
+|                    | Kappa   | 0.60 | 0.70 | 0.75 | 0.50 | 0.50 | 0.30 | 0.35 | 0.50 | 0.53     |
+| Cov + FgMDM        | Acc     | 80.0 | 82.5 | 77.5 | 65.0 | 75.0 | 65.0 | 82.5 | 70.0 | 74.7     |
+|                    | Kappa   | 0.60 | 0.65 | 0.55 | 0.30 | 0.50 | 0.30 | 0.65 | 0.40 | 0.49     |
 
 The classic Riemannian pipeline (spatial covariance + projection into the tangent space 
-to be classifier) with the standard CSP procedure beforehand gives the best results.
+to be classifier) with the standard CSP procedure beforehand gives the best results.  
+The popular CSP followed by a Logistic regression comes second.  
+Geodesic filtering applied on spatial covariances before a classification with Minimum 
+Distance to Mean gave good results as well.  
+
 
 ### Future improvements:
 

@@ -16,7 +16,8 @@
   },
   "Cov + TSLDA": {
     "eval_accuracy": 0.65,
-    "eval_roc_auc": 0.65
+    "eval_roc_auc": 0.65,
+    "eval_kappa": 0.3
   },
   "Cov + FgMDM": {
     "eval_accuracy": 0.825,
@@ -59,5 +60,41 @@
   "Cov + DNN": {
     "eval_accuracy": 0.65,
     "eval_kappa": 0.3
+  },
+  "XdawnCov + basic_DNN": {
+    "eval_accuracy": 0.75,
+    "eval_kappa": 0.5
+  },
+  "XdawnCov + DNN": {
+    "eval_accuracy": 0.725,
+    "eval_kappa": 0.45
+  },
+  "basic_DNN": {
+    "eval_accuracy": 0.55,
+    "eval_kappa": 0.1
+  },
+  "SCNNa": {
+    "eval_accuracy": 0.625,
+    "eval_kappa": 0.25
+  },
+  "SCNNb": {
+    "eval_accuracy": 0.5,
+    "eval_kappa": 0.0
+  },
+  "EEGNet": {
+    "eval_accuracy": 0.775,
+    "eval_kappa": 0.55
+  },
+  "ERPCov + FgMDM": {
+    "eval_accuracy": 0.775,
+    "eval_kappa": 0.55
+  },
+  "XdawnCov + TSLR": {
+    "eval_accuracy": 0.825,
+    "eval_kappa": 0.65
+  },
+  "XdawnCov + FgMDM": {
+    "eval_accuracy": 0.75,
+    "eval_kappa": 0.5
   }
 }

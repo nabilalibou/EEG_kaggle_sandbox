@@ -128,7 +128,8 @@ def evaluate(clf_dict, X, y, score_dict, X_eval, y_eval, num_runs=5, num_epochs=
                 print(f"y_pred:\n{y_avg}")
                 print(f"y_eval:\n{y_eval}")
                 for score_name, scorer in score_dict.items():
-                    res_dict[clf_name][f"eval_{score_name}"] = scorer(y_eval, y_avg)
-                    print(f"{score_name}: {scorer(y_eval, y_avg)}")
+                    res_dict[clf_name][f"eval_{score_name}"] = round(scorer(y_eval,
+                                                                            y_avg), 3)
+                    print(f"{score_name}: {round(scorer(y_eval, y_avg), 3)}")
 
     return res_dict

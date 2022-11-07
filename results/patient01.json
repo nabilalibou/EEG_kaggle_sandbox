@@ -6,5 +6,77 @@
   "Cov + DNN": {
     "eval_accuracy": 0.75,
     "eval_kappa": 0.5
+  },
+  "XdawnCov + basic_DNN": {
+    "eval_accuracy": 0.575,
+    "eval_kappa": 0.15
+  },
+  "XdawnCov + DNN": {
+    "eval_accuracy": 0.525,
+    "eval_kappa": 0.05
+  },
+  "basic_DNN": {
+    "eval_accuracy": 0.4,
+    "eval_kappa": -0.2
+  },
+  "SCNNa": {
+    "eval_accuracy": 0.475,
+    "eval_kappa": -0.05
+  },
+  "SCNNb": {
+    "eval_accuracy": 0.1,
+    "eval_kappa": -0.8
+  },
+  "EEGNet": {
+    "eval_accuracy": 0.675,
+    "eval_kappa": 0.35
+  },
+  "CSP + Log-reg": {
+    "eval_accuracy": 0.8,
+    "eval_kappa": 0.6
+  },
+  "CSP + LDA": {
+    "eval_accuracy": 0.7,
+    "eval_kappa": 0.4
+  },
+  "Cov + TSLR": {
+    "eval_accuracy": 0.85,
+    "eval_kappa": 0.7
+  },
+  "Cov + TSLDA": {
+    "eval_accuracy": 0.575,
+    "eval_kappa": 0.15
+  },
+  "Cov + FgMDM": {
+    "eval_accuracy": 0.8,
+    "eval_kappa": 0.6
+  },
+  "ERPCov + FgMDM": {
+    "eval_accuracy": 0.6,
+    "eval_kappa": 0.2
+  },
+  "ERPCov + CSP + TS + PCA + LR": {
+    "eval_accuracy": 0.75,
+    "eval_kappa": 0.5
+  },
+  "ERPCov + TSLR": {
+    "eval_accuracy": 0.75,
+    "eval_kappa": 0.5
+  },
+  "XdawnCov + TSLR": {
+    "eval_accuracy": 0.65,
+    "eval_kappa": 0.3
+  },
+  "XdawnCov + FgMDM": {
+    "eval_accuracy": 0.55,
+    "eval_kappa": 0.1
+  },
+  "CSP + TS + PCA + LR": {
+    "eval_accuracy": 0.85,
+    "eval_kappa": 0.7
+  },
+  "XdawnCov + CSP + TS + PCA + LR": {
+    "eval_accuracy": 0.75,
+    "eval_kappa": 0.5
   }
 }

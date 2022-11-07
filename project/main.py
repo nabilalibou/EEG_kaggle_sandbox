@@ -26,15 +26,17 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # or any {'0', '1', '2'}, to filter ou
 
 data_path = "./data/"
 fig_dir = "./results/"
-number_of_subject = 2  # 8
+number_of_subject = 8  # 8
 mode = "eval"   # test or eval
 doCustomCV = True  # use cross_val() or custom_cross_val()
 plot_erp = False
 # See constants.py
 # clf_selection = ["CSP + Log-reg", "CSP + LDA", "Cov + TSLR", "Cov + TSLDA",
 #                  "Cov + FgMDM", "CSP + TS + PCA + LR"]
-#clf_selection = ["ERPCov + FgMDM","ERPCov + CSP + TS + PCA + LR", "XdawnCov + FgMDM", "XdawnCov + CSP + TS + PCA + LR"]
-clf_selection = ["DNN", "Cov + DNN"]
+clf_selection = ["CSP + Log-reg", "CSP + LDA", "Cov + TSLR", "Cov + TSLDA", "CSP + TSLDA"
+                 "CSP + TSLR", "Cov + FgMDM", "ERPCov + FgMDM", "ERPCov + CSP + TS + PCA + LR",
+                 "ERPCov + TSLR", "XdawnCov + TSLR", "XdawnCov + FgMDM", "Cov + FgMDM",
+                 "CSP + TS + PCA + LR", "XdawnCov + CSP + TS + PCA + LR", "EEGNet"]
 score_selection = ['accuracy', 'kappa']
 
 clf_dict = {}
