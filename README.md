@@ -53,6 +53,9 @@ console, reported in a JSON file and plotted on a grouped bar plot like this one
 <img src="docs\readme_img\patient01_eval.png" width="600" height="450">
 </p>
 
+The program also produces a json file <em>'final_report.json'</em> containing the scores 
+of each method classification averaged for all patients.  
+
 #### Clinical BCI Challenge WCCI-2020 Dataset baseline results
 
 Top 3 model for classification within subject:
