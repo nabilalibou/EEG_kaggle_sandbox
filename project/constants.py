@@ -1,13 +1,18 @@
 """
 File containing all the preprocessing constants for a dataset to be customized.
 Moreover you have the dictionaries storing the score metrics and the classification
-pipeline in which you can pick for the main.py file
+pipeline in which you can pick for the wcci_2020.py file
 """
 
 from mne.decoding import CSP, Vectorizer
 
-from sklearn.metrics import (accuracy_score, precision_score, roc_auc_score,
-                             cohen_kappa_score)
+from sklearn.metrics import (
+    accuracy_score,
+    precision_score,
+    roc_auc_score,
+    cohen_kappa_score,
+    f1_score,
+)
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
@@ -30,17 +35,29 @@ The signals were sampled at 512 Hz and initially filtered with 0.1 to 100 Hz pas
 filter and a notch filter at 50 Hz during data acquisition.
 """
 default_sample_rate = 512
-default_channel_names = ['F3', 'FC3', 'C3', 'CP3', 'P3', 'FCz', 'CPz', 'F4', 'FC4', 'C4',
-                         'CP4', 'P4']
+default_channel_names = [
+    "F3",
+    "FC3",
+    "C3",
+    "CP3",
+    "P3",
+    "FCz",
+    "CPz",
+    "F4",
+    "FC4",
+    "C4",
+    "CP4",
+    "P4",
+]
 num_chans = len(default_channel_names)
 montage = "standard_1020"
 default_cue_time = 3.0
-time_samples = int(default_sample_rate*default_cue_time)
-event_id = {'left-hand': 1, 'right-hand': 2}
+samples = int(default_sample_rate * default_cue_time)
+event_id = {"left-hand": 1, "right-hand": 2}
 
 # bandpass filter parameters
 low_freq = 8
-high_freq = 24  # 30
+high_freq = 24  # 8-30Hz, 7-36Hz
 # time segment (in seconds) used for the classification
 default_t_clf = 3  # 4.5
 
@@ -57,14 +74,15 @@ batch_size = 16
 
 ### Scores metrics
 # To choose : "https://scikit-learn.org/stable/modules/" \
- # "model_evaluation.html#common-cases-predefined-values"
+# "model_evaluation.html#common-cases-predefined-values"
 
 # Score dict
 all_score_dict = {
-    'accuracy': accuracy_score,
-    'precision': precision_score,
-    'roc_auc': roc_auc_score,
-    'kappa': cohen_kappa_score
+    "accuracy": accuracy_score,
+    "precision": precision_score,
+    "roc_auc": roc_auc_score,
+    "kappa": cohen_kappa_score,
+    "f1": f1_score,
 }
 
 ## Classification pipeline dict containing all the classification methods
@@ -140,171 +158,309 @@ EEG-based Brain-Computer Interfaces. Journal of Neural Engineering, vol. 15, p. 
 """
 
 NN_clfs = ["DNN", "SCNN", "EEGNet"]
-# Reshape_3D = FunctionTransformer(reshape_3d)
-# Reshape_4D = FunctionTransformer(reshape_4d)
 
 all_clf_dict = {
     "Vect + KNN": make_pipeline(Vectorizer(), KNeighborsClassifier()),
     "Vect + Log-reg": make_pipeline(Vectorizer(), LogisticRegression(max_iter=100)),
-    "Vect + Scale + LR": make_pipeline(Vectorizer(), StandardScaler(),
-                                       LogisticRegression(max_iter=100)),
+    "Vect + Scale + LR": make_pipeline(
+        Vectorizer(), StandardScaler(), LogisticRegression(max_iter=100)
+    ),
     "Vect + LinSVM": make_pipeline(Vectorizer(), LinearSVC(random_state=0)),
     "Vect + kerSVM": make_pipeline(Vectorizer(), SVC()),
     "Vect + LDA": make_pipeline(Vectorizer(), LinearDiscriminantAnalysis()),
     "Vect + RegLDA": make_pipeline(
-        Vectorizer(),
-        LinearDiscriminantAnalysis(shrinkage='auto', solver='eigen')
+        Vectorizer(), LinearDiscriminantAnalysis(shrinkage="auto", solver="eigen")
     ),
     "CSP + KNN": make_pipeline(CSP(n_components=4, log=True), KNeighborsClassifier()),
-    "CSP + Log-reg": make_pipeline(CSP(n_components=4, log=True),
-                                   LogisticRegression(max_iter=100)),
-    "RegCSP + Log-reg": make_pipeline(CSP(n_components=4, reg='ledoit_wolf', log=True),
-                                      LogisticRegression()),
-    "CSP + LinSVM": make_pipeline(CSP(n_components=4, log=True),
-                                  LinearSVC(random_state=0)),
+    "CSP + Log-reg": make_pipeline(
+        CSP(n_components=4, log=True), LogisticRegression(max_iter=100)
+    ),
+    "RegCSP + Log-reg": make_pipeline(
+        CSP(n_components=4, reg="ledoit_wolf", log=True), LogisticRegression()
+    ),
+    "CSP + LinSVM": make_pipeline(
+        CSP(n_components=4, log=True), LinearSVC(random_state=0)
+    ),
     "CSP + kerSVM": make_pipeline(CSP(n_components=4, log=True), SVC()),
-    "CSP + LDA": make_pipeline(CSP(n_components=4, log=True),
-                               LinearDiscriminantAnalysis()),
+    "CSP + LDA": make_pipeline(
+        CSP(n_components=4, log=True), LinearDiscriminantAnalysis()
+    ),
     "CSP + RegLDA": make_pipeline(
         CSP(n_components=4, log=True),
-        LinearDiscriminantAnalysis(shrinkage='auto', solver='eigen')
+        LinearDiscriminantAnalysis(shrinkage="auto", solver="eigen"),
     ),
-    "Cov + MDM": make_pipeline(Covariances(),
-                               MDM(metric=dict(mean='riemann', distance='riemann'))),
-    "Cov + FgMDM": make_pipeline(Covariances(),
-                                 FgMDM(metric=dict(mean='riemann', distance='riemann'))),
-    "Cov + TSLR": make_pipeline(Covariances(), TangentSpace(),
-                                LogisticRegression()),
-    "Cov + TSkerSVM": make_pipeline(Covariances(), TangentSpace(),
-                                    SVC()),
-    "Cov + TSLDA": make_pipeline(Covariances(), TangentSpace(),
-                                 LinearDiscriminantAnalysis()),
-    "CSP + TSLDA": make_pipeline(Covariances(), covCSP(nfilter=4, log=False),
-                                 TangentSpace(), LinearDiscriminantAnalysis()),
-    "CSP + TSLR": make_pipeline(Covariances(), covCSP(nfilter=4, log=False),
-                                TangentSpace(), LogisticRegression()),
-    "CSP + TS + PCA + LR": make_pipeline(Covariances(), covCSP(nfilter=4, log=False),
-                                         TangentSpace(), PCA(n_components=2),
-                                         LogisticRegression()),
-    "ERPCov + MDM": make_pipeline(ERPCovariances(estimator='oas'), MDM()),  # default scm, lwf
-    "ERPCov + TSLR": make_pipeline(ERPCovariances(estimator='oas'), TangentSpace(),
-                                   LogisticRegression()),
-    "ERPCov + CSP + TSLDA": make_pipeline(ERPCovariances(estimator='oas'),
-                                          covCSP(nfilter=4, log=False), TangentSpace(),
-                                          LinearDiscriminantAnalysis()),
-    "ERPCov + CSP + TSLR": make_pipeline(ERPCovariances(estimator='oas'),
-                                         covCSP(nfilter=4, log=False), TangentSpace(),
-                                         LogisticRegression()),
-    "ERPCov + FgMDM": make_pipeline(ERPCovariances(estimator='oas'),
-                                      FgMDM(metric=dict(mean='riemann',
-                                                        distance='riemann'))),
-    "ERPCov + CSP + TS + PCA + LR": make_pipeline(ERPCovariances(estimator='oas'),
-                                                  covCSP(nfilter=4, log=False),
-                                                  TangentSpace(), PCA(n_components=2),
-                                                  LogisticRegression()),
-    "XdawnCov + MDM": make_pipeline(XdawnCovariances(estimator='oas'), MDM()),  # default scm, lwf
-    "XdawnCov + TSLR": make_pipeline(XdawnCovariances(estimator='oas'), TangentSpace(),
-                                   LogisticRegression()),  # default scm, lwf
-    "XdawnCov + TSLDA": make_pipeline(XdawnCovariances(estimator='oas'), TangentSpace(),
-                                    LinearDiscriminantAnalysis()),
-    "XdawnCov + CSP + TSLDA": make_pipeline(XdawnCovariances(estimator='oas'),
-                                            covCSP(nfilter=4, log=False),
-                                            TangentSpace(),
-                                            LinearDiscriminantAnalysis()),
-    "XdawnCov + CSP + TSLR": make_pipeline(XdawnCovariances(estimator='oas'),
-                                           covCSP(nfilter=4, log=False), TangentSpace(),
-                                           LogisticRegression()),
-    "XdawnCov + FgMDM": make_pipeline(XdawnCovariances(estimator='oas'),
-                                 FgMDM(metric=dict(mean='riemann', distance='riemann'))),
-    "XdawnCov + CSP + TS + PCA + LR": make_pipeline(XdawnCovariances(estimator='oas'),
-                                                    covCSP(nfilter=4, log=False),
-                                                    TangentSpace(), PCA(n_components=2),
-                                                    LogisticRegression()),
-    "basic_DNN": make_pipeline(KerasClassifier(
-        model=basic_DNN(num_chans, time_samples, 16, 'relu', learning_rate),
-        epochs=num_epochs, batch_size=batch_size, verbose=False)),
-    "DNN": make_pipeline(KerasClassifier(
-        model=DNN(num_chans, time_samples, 'relu', learning_rate), epochs=num_epochs,
-        batch_size=batch_size, verbose=False)),
-    "SCNNa": make_pipeline(KerasClassifier(
-        model=SCNNa(num_chans, time_samples, learning_rate), epochs=num_epochs,
-        batch_size=batch_size, verbose=False)),
-    "SCNNb": make_pipeline(KerasClassifier(
-        model=SCNNb(num_chans, time_samples, learning_rate, dropout_rate),
-        epochs=num_epochs, batch_size=batch_size, verbose=False)),
-    "EEGNet": make_pipeline(KerasClassifier(
-        model=eegnet(num_chans, time_samples, dropout_rate, default_sample_rate, 8, 2,
-        4, learning_rate), epochs=num_epochs, batch_size=batch_size, verbose=False)),
-    "Cov + basic_DNN": make_pipeline(Covariances(), Reshape_4d(),
-                                          KerasClassifier(
-                                              model=basic_DNN(12, 12,
-                                                              16, 'relu',
-                                                              learning_rate),
-                                              epochs=num_epochs, batch_size=batch_size,
-                                              verbose=False)),
-    "Cov + DNN": make_pipeline(Covariances(), Reshape_4d(),
-                                    KerasClassifier(
-                                        model=DNN(12, 12, 'relu',
-                                                  learning_rate), epochs=num_epochs,
-                                        batch_size=batch_size, verbose=False)),
-    "Cov + SCNNa": make_pipeline(Covariances(), Reshape_4d(),
-                                      KerasClassifier(
-                                          model=SCNNa(num_chans, time_samples,
-                                                      learning_rate), epochs=num_epochs,
-                                          batch_size=batch_size, verbose=False)),
-    "Cov + SCNNb": make_pipeline(Covariances(), Reshape_4d(),
-                                      KerasClassifier(
-                                          model=SCNNb(num_chans, time_samples,
-                                                      learning_rate, dropout_rate),
-                                          epochs=num_epochs, batch_size=batch_size,
-                                          verbose=False)),
-    "Cov + EEGNet": make_pipeline(Covariances(), Reshape_4d(),
-                                       KerasClassifier(
-                                           model=eegnet(num_chans, time_samples,
-                                                        dropout_rate,
-                                                        default_sample_rate, 8, 2,
-                                                        4, learning_rate),
-                                           epochs=num_epochs, batch_size=batch_size,
-                                           verbose=False)),
-    "XdawnCov + basic_DNN": make_pipeline(XdawnCovariances(estimator='oas'),
-                                          Reshape_4d(),
-                                          KerasClassifier(
-                                              model=basic_DNN(16, 16,
-                                                              16, 'relu',
-                                                              learning_rate),
-                                          epochs=num_epochs, batch_size=batch_size,
-                                          verbose=False)),
-    "XdawnCov + DNN": make_pipeline(XdawnCovariances(estimator='oas'),
-                                    Reshape_4d(),
-                                    KerasClassifier(
-                                        model=DNN(16, 16, 'relu',
-                                                  learning_rate), epochs=num_epochs,
-                                                  batch_size=batch_size, verbose=False)),
-    "XdawnCov + SCNNa": make_pipeline(XdawnCovariances(estimator='oas'),
-                                      Reshape_4d(),
-                                      KerasClassifier(
-                                          model=SCNNa(num_chans, time_samples,
-                                                      learning_rate), epochs=num_epochs,
-                                                batch_size=batch_size, verbose=False)),
-    "XdawnCov + SCNNb": make_pipeline(XdawnCovariances(estimator='oas'),
-                                      Reshape_4d(),
-                                      KerasClassifier(
-                                          model=SCNNb(num_chans, time_samples,
-                                                      learning_rate, dropout_rate),
-                                          epochs=num_epochs, batch_size=batch_size,
-                                          verbose=False)),
-    "XdawnCov + EEGNet": make_pipeline(XdawnCovariances(estimator='oas'),
-                                       Reshape_4d(),
-                                       KerasClassifier(
-                                           model=eegnet(num_chans, time_samples,
-                                                        dropout_rate,
-                                                        default_sample_rate, 8, 2,
-                                                        4, learning_rate),
-                                           epochs=num_epochs, batch_size=batch_size,
-                                           verbose=False)),
+    "Cov + MDM": make_pipeline(
+        Covariances(), MDM(metric=dict(mean="riemann", distance="riemann"))
+    ),
+    "Cov + FgMDM": make_pipeline(
+        Covariances(), FgMDM(metric=dict(mean="riemann", distance="riemann"))
+    ),
+    "Cov + TSLR": make_pipeline(Covariances(), TangentSpace(), LogisticRegression()),
+    "Cov + TSkerSVM": make_pipeline(Covariances(), TangentSpace(), SVC()),
+    "Cov + TSLDA": make_pipeline(
+        Covariances(), TangentSpace(), LinearDiscriminantAnalysis()
+    ),
+    "CSP + TSLDA": make_pipeline(
+        Covariances(),
+        covCSP(nfilter=4, log=False),
+        TangentSpace(),
+        LinearDiscriminantAnalysis(),
+    ),
+    "CSP + TSLR": make_pipeline(
+        Covariances(),
+        covCSP(nfilter=4, log=False),
+        TangentSpace(),
+        LogisticRegression(),
+    ),
+    "CSP + TS + PCA + LR": make_pipeline(
+        Covariances(),
+        covCSP(nfilter=4, log=False),
+        TangentSpace(),
+        PCA(n_components=2),
+        LogisticRegression(),
+    ),
+    "basic_DNN": make_pipeline(
+        KerasClassifier(
+            model=basic_DNN,
+            num_chans=num_chans,
+            samples=samples,
+            num_hidden=16,
+            activation="relu",
+            learning_rate=learning_rate,
+            epochs=num_epochs,
+            batch_size=batch_size,
+            verbose=False,
+        )
+    ),
+    "DNN": make_pipeline(
+        KerasClassifier(
+            model=DNN,
+            num_chans=num_chans,
+            samples=samples,
+            activation="relu",
+            learning_rate=learning_rate,
+            epochs=num_epochs,
+            batch_size=batch_size,
+            verbose=False,
+        )
+    ),
+    "SCNNa": make_pipeline(
+        KerasClassifier(
+            model=SCNNa,
+            num_chans=num_chans,
+            samples=samples,
+            learning_rate=learning_rate,
+            epochs=num_epochs,
+            batch_size=batch_size,
+            verbose=False,
+        )
+    ),
+    "SCNNb": make_pipeline(
+        KerasClassifier(
+            model=SCNNb,
+            num_chans=num_chans,
+            samples=samples,
+            learning_rate=learning_rate,
+            dropout_rate=dropout_rate,
+            epochs=num_epochs,
+            batch_size=batch_size,
+            verbose=False,
+        )
+    ),
+    "EEGNet": make_pipeline(
+        KerasClassifier(
+            model=eegnet,
+            num_chans=num_chans,
+            samples=samples,
+            dropout_rate=dropout_rate,
+            F1=8,
+            D=2,
+            P1=4,
+            learning_rate=learning_rate,
+            epochs=num_epochs,
+            batch_size=batch_size,
+            verbose=False,
+        )
+    ),
+    "custEEGNet": make_pipeline(
+        KerasClassifier(
+            model=cust_eegnet,
+            num_chans=num_chans,
+            samples=samples,
+            dropout_rate=dropout_rate,
+            sampling_rate=default_sample_rate,
+            F1=8,
+            D=2,
+            P1=4,
+            learning_rate=learning_rate,
+            epochs=num_epochs,
+            batch_size=batch_size,
+            verbose=False,
+        )
+    ),
+    "Cov + basic_DNN": make_pipeline(
+        Covariances(),
+        Expand(),
+        KerasClassifier(
+            model=basic_DNN,
+            num_chans=12,
+            samples=12,
+            num_hidden=16,
+            activation="relu",
+            learning_rate=learning_rate,
+            epochs=num_epochs,
+            batch_size=batch_size,
+            verbose=False,
+        ),
+    ),
+    "Cov + DNN": make_pipeline(
+        Covariances(),
+        Expand(),
+        KerasClassifier(
+            model=DNN,
+            num_chans=12,
+            samples=12,
+            activation="relu",
+            learning_rate=learning_rate,
+            epochs=num_epochs,
+            batch_size=batch_size,
+            verbose=False,
+        ),
+    ),
+    "Cov + DNNb": make_pipeline(
+        Covariances(),
+        Expand(),
+        KerasClassifier(
+            model=DNNb,
+            num_chans=12,
+            samples=12,
+            activation="relu",
+            learning_rate=learning_rate,
+            epochs=num_epochs,
+            batch_size=batch_size,
+            verbose=False,
+        ),
+    ),
+    "Cov + basic_DNN": make_pipeline(
+        Covariances(),
+        TangentSpace(),
+        Expand(),
+        KerasClassifier(
+            model=basic_DNN,
+            num_chans=78,
+            samples=16,
+            num_hidden=16,
+            activation="relu",
+            learning_rate=learning_rate,
+            epochs=num_epochs,
+            batch_size=batch_size,
+            verbose=False,
+        ),
+    ),
+    "CovTG + basic_DNN2d_16": make_pipeline(
+        Covariances(),
+        TangentSpace(),
+        Expand(),
+        KerasClassifier(
+            model=basic_DNN2d,
+            num_chans=78,
+            samples=16,
+            activation="relu",
+            learning_rate=learning_rate,
+            epochs=num_epochs,
+            batch_size=batch_size,
+            verbose=False,
+        ),
+    ),
+    "CovTG + basic_DNN2d_24": make_pipeline(
+        Covariances(),
+        TangentSpace(),
+        Expand(),
+        KerasClassifier(
+            model=basic_DNN2d,
+            num_chans=78,
+            samples=24,
+            activation="relu",
+            learning_rate=learning_rate,
+            epochs=num_epochs,
+            batch_size=batch_size,
+            verbose=False,
+        ),
+    ),
+    "CovTG + DNNb_2d": make_pipeline(
+        Covariances(),
+        TangentSpace(),
+        Expand(),
+        KerasClassifier(
+            model=DNNb_2d,
+            num_chans=78,
+            activation="relu",
+            learning_rate=learning_rate,
+            epochs=num_epochs,
+            batch_size=batch_size,
+            verbose=False,
+        ),
+    ),
+    "Cov + SCNNa": make_pipeline(
+        Covariances(),
+        Expand(),
+        KerasClassifier(
+            model=SCNNa,
+            num_chans=12,
+            samples=12,
+            learning_rate=learning_rate,
+            epochs=num_epochs,
+            batch_size=batch_size,
+            verbose=False,
+        ),
+    ),
+    "Cov + SCNNb": make_pipeline(
+        Covariances(),
+        Expand(),
+        KerasClassifier(
+            model=SCNNb,
+            num_chans=12,
+            samples=12,
+            learning_rate=learning_rate,
+            dropout_rate=dropout_rate,
+            epochs=num_epochs,
+            batch_size=batch_size,
+            verbose=False,
+        ),
+    ),
+    "Cov + EEGNet": make_pipeline(
+        Covariances(),
+        Expand(),
+        KerasClassifier(
+            model=eegnet,
+            num_chans=80,
+            samples=78,
+            dropout_rate=dropout_rate,
+            F1=8,
+            D=2,
+            P1=4,
+            learning_rate=learning_rate,
+            epochs=num_epochs,
+            batch_size=batch_size,
+            verbose=False,
+        ),
+    ),
+    "CovTG + EEGNet": make_pipeline(
+        Covariances(),
+        Expand(),
+        KerasClassifier(
+            model=eegnet,
+            num_chans=80,
+            samples=78,
+            dropout_rate=dropout_rate,
+            sampling_rate=default_sample_rate,
+            F1=8,
+            D=2,
+            P1=4,
+            learning_rate=learning_rate,
+            epochs=num_epochs,
+            batch_size=batch_size,
+            verbose=False,
+        ),
+    ),
 }
-#"SCNNa": SCNNa(),
-# "Cov + TSFGDA": make_pipeline(Covariances(), FGDA(), PCA(n_components=2),
-#                              LinearDiscriminantAnalysis()),
-# "Cov + TSFGDA + PCA + SVM": make_pipeline(Covariances(), FGDA(), PCA(n_components=2),
-#                               SVC()),

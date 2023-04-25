@@ -13,10 +13,12 @@ interface.
 git clone https://github.com/Nabil-AL/eeg-clf_sandbox.git
 pip install -r requirements.txt
 cd eeg-clf_sandbox/project
-python3 main.py
+python3 wcci_2020.py
 ```
 
-### Dataset available (only one currently):
+## Dataset available:
+
+### Motor-Imagery Dataset
 
 Motor Imagery dataset from the Clinical BCI Challenge WCCI-2020. It consists of EEG brain imaging data for 
 10 hemiparetic stroke patients having hand functional disability.  
@@ -34,7 +36,7 @@ list ```clf_selection``` and ```score_selection``` with keys coming from the dic
 ```all_clf_dict``` and ```all_score_dict``` available in <em>constants.py</em>.  
 
 For the moment, only a portion of the score metrics and classification methods are 
-available:  
+available:
 
 <ins>Score metrics</ins>: accuracy, precision, roc auc, Cohen’s kappa.  
 
@@ -96,22 +98,7 @@ results as well.
 + Add cross-subject mode (train on 8 subjects and predict the labels of the last two).
 
 
-+ Add new classification methods: Filter Bank Common Spatial Patterns (FBCSP), some popular
-classifiers; XGBoost Classifier, Random forest. Add the possibility to do some ensembling 
-with the classification pipelines.
-
-
-+ add feature like functional connectivity, test feature extraction method like autoencoder ...
-
-
-+ Add docstrings, comments and optimize code.
-
-
-+ Add others dataset to play with.  
-
-
-+ Add some possibility to plot the epochs/trials and their characteristics 
-(ERPs, topomap, PSD).  
++ Add others dataset to play with.
 
 
 

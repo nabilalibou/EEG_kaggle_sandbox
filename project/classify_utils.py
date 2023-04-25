@@ -5,14 +5,19 @@ import copy
 import numpy as np
 from sklearn.model_selection import KFold, StratifiedKFold
 from sklearn.model_selection import cross_validate, train_test_split
-from sklearn.metrics import (make_scorer, get_scorer_names, _scorer, confusion_matrix,
-                             ConfusionMatrixDisplay)
+from sklearn.metrics import (
+    make_scorer,
+    get_scorer_names,
+    _scorer,
+    confusion_matrix,
+    ConfusionMatrixDisplay,
+)
 from sklearn.utils import shuffle
 from tensorflow import keras
 from project.constants import *
 
 
-def cross_val(clf_dict, X, y, score_dict, n_folds = 5, return_train_score=False):
+def cross_val(clf_dict, X, y, score_dict, n_folds=5, return_train_score=False):
     """
     Use cross_validate instead of cross_val_score because we will use multiple score
     metrics.
@@ -38,9 +43,15 @@ def cross_val(clf_dict, X, y, score_dict, n_folds = 5, return_train_score=False)
     res_dict = {}
     print(f"{'*' * 10} {n_folds}-folds Cross-validation Results {'*' * 10}")
     for clf_name, clf_value in clf_dict.items():
-        res = cross_validate(clf_value, X, y, cv=cv, scoring=score_dict,
-                             return_train_score=return_train_score,
-                             return_estimator=True)
+        res = cross_validate(
+            clf_value,
+            X,
+            y,
+            cv=cv,
+            scoring=score_dict,
+            return_train_score=return_train_score,
+            return_estimator=True,
+        )
         res_dict[clf_name] = res
         print(f"-> {clf_name}:")
         for cv_key, cv_value in res_dict[clf_name].items():
@@ -52,7 +63,6 @@ def cross_val(clf_dict, X, y, score_dict, n_folds = 5, return_train_score=False)
 
 
 def custom_cross_val(clf_dict, X, y, score_dict, n_folds=5):
-
     # If no Cross-validation iterators defined:
     # X_train, X_test, y_train, y_test = train_test_split(X, y, shuffle=True,
     # test_size=0.3) #small dataset
@@ -118,18 +128,20 @@ def evaluate(clf_dict, X, y, score_dict, X_eval, y_eval, num_runs=5, num_epochs=
             # )
             # disp.plot()
             # plt.show()
-            if run == num_runs-1:
+            if run == num_runs - 1:
                 y_acc /= num_runs
                 y_avg = (np.rint(np.squeeze(y_acc))).astype(int)
                 print(
                     f"{'%' * 8} Evaluate: Prediction vs Truth for the '{clf_name}' "
                     f"pipeline "
-                    f"{'%' * 8}")
+                    f"{'%' * 8}"
+                )
                 print(f"y_pred:\n{y_avg}")
                 print(f"y_eval:\n{y_eval}")
                 for score_name, scorer in score_dict.items():
-                    res_dict[clf_name][f"eval_{score_name}"] = round(scorer(y_eval,
-                                                                            y_avg), 3)
+                    res_dict[clf_name][f"eval_{score_name}"] = round(
+                        scorer(y_eval, y_avg), 3
+                    )
                     print(f"{score_name}: {round(scorer(y_eval, y_avg), 3)}")
 
     return res_dict

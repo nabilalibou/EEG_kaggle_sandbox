@@ -88,5 +88,13 @@
   "XdawnCov + FgMDM": {
     "eval_accuracy": 0.675,
     "eval_kappa": 0.35
+  },
+  "Cov + DNNb": {
+    "eval_accuracy": 0.5,
+    "eval_kappa": 0.0
+  },
+  "CovTG + DNNb_2d": {
+    "eval_accuracy": 0.6,
+    "eval_kappa": 0.2
   }
 }

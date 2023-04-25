@@ -1,486 +1,156 @@
 {
   "average": {
-    "CSP + Log-reg": {
-      "eval_accuracy": 0.763,
-      "eval_kappa": 0.525
+    "Cov + basic_DNN": {
+      "eval_accuracy": 0.615,
+      "eval_kappa": 0.23
     },
-    "CSP + LDA": {
-      "eval_accuracy": 0.738,
-      "eval_kappa": 0.475
+    "CovTG + DNNb": {
+      "eval_accuracy": 0.68,
+      "eval_kappa": 0.36
     },
-    "Cov + TSLR": {
-      "eval_accuracy": 0.747,
-      "eval_kappa": 0.494
+    "CovTG + DNNbb": {
+      "eval_accuracy": 0.655,
+      "eval_kappa": 0.31
     },
-    "Cov + TSLDA": {
-      "eval_accuracy": 0.55,
-      "eval_kappa": 0.1
+    "CovTG + DNNbbb": {
+      "eval_accuracy": 0.68,
+      "eval_kappa": 0.36
     },
-    "Cov + FgMDM": {
-      "eval_accuracy": 0.747,
-      "eval_kappa": 0.494
+    "CovTG + DNNbbbb": {
+      "eval_accuracy": 0.665,
+      "eval_kappa": 0.33
     },
-    "ERPCov + FgMDM": {
-      "eval_accuracy": 0.641,
-      "eval_kappa": 0.281
-    },
-    "ERPCov + CSP + TS + PCA + LR": {
-      "eval_accuracy": 0.753,
-      "eval_kappa": 0.506
-    },
-    "ERPCov + TSLR": {
-      "eval_accuracy": 0.706,
-      "eval_kappa": 0.413
-    },
-    "XdawnCov + TSLR": {
-      "eval_accuracy": 0.691,
-      "eval_kappa": 0.381
-    },
-    "XdawnCov + FgMDM": {
-      "eval_accuracy": 0.616,
-      "eval_kappa": 0.231
-    },
-    "CSP + TS + PCA + LR": {
-      "eval_accuracy": 0.788,
-      "eval_kappa": 0.575
-    },
-    "XdawnCov + CSP + TS + PCA + LR": {
-      "eval_accuracy": 0.759,
-      "eval_kappa": 0.519
-    },
-    "EEGNet": {
-      "eval_accuracy": 0.666,
-      "eval_kappa": 0.331
+    "CovTG + DNNbbbbb": {
+      "eval_accuracy": 0.695,
+      "eval_kappa": 0.39
     }
   },
   "subject_1": {
-    "CSP + Log-reg": {
-      "eval_accuracy": 0.8,
-      "eval_kappa": 0.6
-    },
-    "CSP + LDA": {
+    "Cov + basic_DNN": {
       "eval_accuracy": 0.7,
       "eval_kappa": 0.4
     },
-    "Cov + TSLR": {
-      "eval_accuracy": 0.85,
-      "eval_kappa": 0.7
-    },
-    "Cov + TSLDA": {
-      "eval_accuracy": 0.575,
-      "eval_kappa": 0.15
-    },
-    "Cov + FgMDM": {
+    "CovTG + DNNb": {
       "eval_accuracy": 0.8,
       "eval_kappa": 0.6
     },
-    "ERPCov + FgMDM": {
-      "eval_accuracy": 0.6,
-      "eval_kappa": 0.2
+    "CovTG + DNNbb": {
+      "eval_accuracy": 0.725,
+      "eval_kappa": 0.45
     },
-    "ERPCov + CSP + TS + PCA + LR": {
+    "CovTG + DNNbbb": {
       "eval_accuracy": 0.75,
       "eval_kappa": 0.5
     },
-    "ERPCov + TSLR": {
-      "eval_accuracy": 0.75,
-      "eval_kappa": 0.5
+    "CovTG + DNNbbbb": {
+      "eval_accuracy": 0.725,
+      "eval_kappa": 0.45
     },
-    "XdawnCov + TSLR": {
-      "eval_accuracy": 0.65,
-      "eval_kappa": 0.3
-    },
-    "XdawnCov + FgMDM": {
-      "eval_accuracy": 0.55,
-      "eval_kappa": 0.1
-    },
-    "CSP + TS + PCA + LR": {
-      "eval_accuracy": 0.85,
-      "eval_kappa": 0.7
-    },
-    "XdawnCov + CSP + TS + PCA + LR": {
-      "eval_accuracy": 0.75,
-      "eval_kappa": 0.5
-    },
-    "EEGNet": {
-      "eval_accuracy": 0.675,
-      "eval_kappa": 0.35
+    "CovTG + DNNbbbbb": {
+      "eval_accuracy": 0.8,
+      "eval_kappa": 0.6
     }
   },
   "subject_2": {
-    "CSP + Log-reg": {
-      "eval_accuracy": 0.85,
-      "eval_kappa": 0.7
+    "Cov + basic_DNN": {
+      "eval_accuracy": 0.7,
+      "eval_kappa": 0.4
     },
-    "CSP + LDA": {
-      "eval_accuracy": 0.775,
-      "eval_kappa": 0.55
-    },
-    "Cov + TSLR": {
-      "eval_accuracy": 0.825,
-      "eval_kappa": 0.65
-    },
-    "Cov + TSLDA": {
-      "eval_accuracy": 0.65,
-      "eval_kappa": 0.3
-    },
-    "Cov + FgMDM": {
-      "eval_accuracy": 0.825,
-      "eval_kappa": 0.65
-    },
-    "ERPCov + FgMDM": {
-      "eval_accuracy": 0.775,
-      "eval_kappa": 0.55
-    },
-    "ERPCov + CSP + TS + PCA + LR": {
-      "eval_accuracy": 0.875,
-      "eval_kappa": 0.75
-    },
-    "ERPCov + TSLR": {
-      "eval_accuracy": 0.825,
-      "eval_kappa": 0.65
-    },
-    "XdawnCov + TSLR": {
-      "eval_accuracy": 0.825,
-      "eval_kappa": 0.65
-    },
-    "XdawnCov + FgMDM": {
-      "eval_accuracy": 0.75,
-      "eval_kappa": 0.5
-    },
-    "CSP + TS + PCA + LR": {
-      "eval_accuracy": 0.875,
-      "eval_kappa": 0.75
-    },
-    "XdawnCov + CSP + TS + PCA + LR": {
-      "eval_accuracy": 0.9,
-      "eval_kappa": 0.8
-    },
-    "EEGNet": {
-      "eval_accuracy": 0.775,
-      "eval_kappa": 0.55
-    }
-  },
-  "subject_3": {
-    "CSP + Log-reg": {
-      "eval_accuracy": 0.875,
-      "eval_kappa": 0.75
-    },
-    "CSP + LDA": {
-      "eval_accuracy": 0.8,
-      "eval_kappa": 0.6
-    },
-    "Cov + TSLR": {
-      "eval_accuracy": 0.725,
-      "eval_kappa": 0.45
-    },
-    "Cov + TSLDA": {
-      "eval_accuracy": 0.625,
-      "eval_kappa": 0.25
-    },
-    "Cov + FgMDM": {
-      "eval_accuracy": 0.775,
-      "eval_kappa": 0.55
-    },
-    "ERPCov + FgMDM": {
-      "eval_accuracy": 0.45,
-      "eval_kappa": -0.1
-    },
-    "ERPCov + CSP + TS + PCA + LR": {
-      "eval_accuracy": 0.875,
-      "eval_kappa": 0.75
-    },
-    "ERPCov + TSLR": {
-      "eval_accuracy": 0.625,
-      "eval_kappa": 0.25
-    },
-    "XdawnCov + TSLR": {
-      "eval_accuracy": 0.625,
-      "eval_kappa": 0.25
-    },
-    "XdawnCov + FgMDM": {
-      "eval_accuracy": 0.55,
-      "eval_kappa": 0.1
-    },
-    "CSP + TS + PCA + LR": {
-      "eval_accuracy": 0.875,
-      "eval_kappa": 0.75
-    },
-    "XdawnCov + CSP + TS + PCA + LR": {
-      "eval_accuracy": 0.825,
-      "eval_kappa": 0.65
-    },
-    "EEGNet": {
-      "eval_accuracy": 0.65,
-      "eval_kappa": 0.3
-    }
-  },
-  "subject_4": {
-    "CSP + Log-reg": {
-      "eval_accuracy": 0.75,
-      "eval_kappa": 0.5
-    },
-    "CSP + LDA": {
-      "eval_accuracy": 0.675,
-      "eval_kappa": 0.35
-    },
-    "Cov + TSLR": {
-      "eval_accuracy": 0.65,
-      "eval_kappa": 0.3
-    },
-    "Cov + TSLDA": {
-      "eval_accuracy": 0.325,
-      "eval_kappa": -0.35
-    },
-    "Cov + FgMDM": {
-      "eval_accuracy": 0.65,
-      "eval_kappa": 0.3
-    },
-    "ERPCov + FgMDM": {
-      "eval_accuracy": 0.625,
-      "eval_kappa": 0.25
-    },
-    "ERPCov + CSP + TS + PCA + LR": {
-      "eval_accuracy": 0.725,
-      "eval_kappa": 0.45
-    },
-    "ERPCov + TSLR": {
-      "eval_accuracy": 0.675,
-      "eval_kappa": 0.35
-    },
-    "XdawnCov + TSLR": {
-      "eval_accuracy": 0.65,
-      "eval_kappa": 0.3
-    },
-    "XdawnCov + FgMDM": {
-      "eval_accuracy": 0.6,
-      "eval_kappa": 0.2
-    },
-    "CSP + TS + PCA + LR": {
-      "eval_accuracy": 0.75,
-      "eval_kappa": 0.5
-    },
-    "XdawnCov + CSP + TS + PCA + LR": {
-      "eval_accuracy": 0.725,
-      "eval_kappa": 0.45
-    },
-    "EEGNet": {
-      "eval_accuracy": 0.6,
-      "eval_kappa": 0.2
-    }
-  },
-  "subject_5": {
-    "CSP + Log-reg": {
-      "eval_accuracy": 0.75,
-      "eval_kappa": 0.5
-    },
-    "CSP + LDA": {
-      "eval_accuracy": 0.775,
-      "eval_kappa": 0.55
-    },
-    "Cov + TSLR": {
-      "eval_accuracy": 0.725,
-      "eval_kappa": 0.45
-    },
-    "Cov + TSLDA": {
+    "CovTG + DNNb": {
       "eval_accuracy": 0.525,
       "eval_kappa": 0.05
     },
-    "Cov + FgMDM": {
-      "eval_accuracy": 0.75,
-      "eval_kappa": 0.5
+    "CovTG + DNNbb": {
+      "eval_accuracy": 0.525,
+      "eval_kappa": 0.05
     },
-    "ERPCov + FgMDM": {
-      "eval_accuracy": 0.7,
-      "eval_kappa": 0.4
-    },
-    "ERPCov + CSP + TS + PCA + LR": {
-      "eval_accuracy": 0.725,
-      "eval_kappa": 0.45
-    },
-    "ERPCov + TSLR": {
-      "eval_accuracy": 0.725,
-      "eval_kappa": 0.45
-    },
-    "XdawnCov + TSLR": {
-      "eval_accuracy": 0.675,
-      "eval_kappa": 0.35
-    },
-    "XdawnCov + FgMDM": {
-      "eval_accuracy": 0.7,
-      "eval_kappa": 0.4
-    },
-    "CSP + TS + PCA + LR": {
-      "eval_accuracy": 0.75,
-      "eval_kappa": 0.5
-    },
-    "XdawnCov + CSP + TS + PCA + LR": {
-      "eval_accuracy": 0.625,
-      "eval_kappa": 0.25
-    },
-    "EEGNet": {
-      "eval_accuracy": 0.725,
-      "eval_kappa": 0.45
-    }
-  },
-  "subject_6": {
-    "CSP + Log-reg": {
-      "eval_accuracy": 0.65,
-      "eval_kappa": 0.3
-    },
-    "CSP + LDA": {
-      "eval_accuracy": 0.675,
-      "eval_kappa": 0.35
-    },
-    "Cov + TSLR": {
-      "eval_accuracy": 0.65,
-      "eval_kappa": 0.3
-    },
-    "Cov + TSLDA": {
-      "eval_accuracy": 0.55,
-      "eval_kappa": 0.1
-    },
-    "Cov + FgMDM": {
-      "eval_accuracy": 0.65,
-      "eval_kappa": 0.3
-    },
-    "ERPCov + FgMDM": {
-      "eval_accuracy": 0.625,
-      "eval_kappa": 0.25
-    },
-    "ERPCov + CSP + TS + PCA + LR": {
-      "eval_accuracy": 0.55,
-      "eval_kappa": 0.1
-    },
-    "ERPCov + TSLR": {
-      "eval_accuracy": 0.725,
-      "eval_kappa": 0.45
-    },
-    "XdawnCov + TSLR": {
-      "eval_accuracy": 0.725,
-      "eval_kappa": 0.45
-    },
-    "XdawnCov + FgMDM": {
-      "eval_accuracy": 0.675,
-      "eval_kappa": 0.35
-    },
-    "CSP + TS + PCA + LR": {
-      "eval_accuracy": 0.6,
-      "eval_kappa": 0.2
-    },
-    "XdawnCov + CSP + TS + PCA + LR": {
-      "eval_accuracy": 0.7,
-      "eval_kappa": 0.4
-    },
-    "EEGNet": {
-      "eval_accuracy": 0.6,
-      "eval_kappa": 0.2
-    }
-  },
-  "subject_7": {
-    "CSP + Log-reg": {
-      "eval_accuracy": 0.675,
-      "eval_kappa": 0.35
-    },
-    "CSP + LDA": {
-      "eval_accuracy": 0.725,
-      "eval_kappa": 0.45
-    },
-    "Cov + TSLR": {
-      "eval_accuracy": 0.85,
-      "eval_kappa": 0.7
-    },
-    "Cov + TSLDA": {
-      "eval_accuracy": 0.6,
-      "eval_kappa": 0.2
-    },
-    "Cov + FgMDM": {
-      "eval_accuracy": 0.825,
-      "eval_kappa": 0.65
-    },
-    "ERPCov + FgMDM": {
-      "eval_accuracy": 0.7,
-      "eval_kappa": 0.4
-    },
-    "ERPCov + CSP + TS + PCA + LR": {
-      "eval_accuracy": 0.7,
-      "eval_kappa": 0.4
-    },
-    "ERPCov + TSLR": {
-      "eval_accuracy": 0.725,
-      "eval_kappa": 0.45
-    },
-    "XdawnCov + TSLR": {
-      "eval_accuracy": 0.8,
-      "eval_kappa": 0.6
-    },
-    "XdawnCov + FgMDM": {
-      "eval_accuracy": 0.6,
-      "eval_kappa": 0.2
-    },
-    "CSP + TS + PCA + LR": {
-      "eval_accuracy": 0.7,
-      "eval_kappa": 0.4
-    },
-    "XdawnCov + CSP + TS + PCA + LR": {
-      "eval_accuracy": 0.725,
-      "eval_kappa": 0.45
-    },
-    "EEGNet": {
-      "eval_accuracy": 0.65,
-      "eval_kappa": 0.3
-    }
-  },
-  "subject_8": {
-    "CSP + Log-reg": {
-      "eval_accuracy": 0.75,
-      "eval_kappa": 0.5
-    },
-    "CSP + LDA": {
-      "eval_accuracy": 0.775,
-      "eval_kappa": 0.55
-    },
-    "Cov + TSLR": {
-      "eval_accuracy": 0.7,
-      "eval_kappa": 0.4
-    },
-    "Cov + TSLDA": {
-      "eval_accuracy": 0.55,
-      "eval_kappa": 0.1
-    },
-    "Cov + FgMDM": {
-      "eval_accuracy": 0.7,
-      "eval_kappa": 0.4
-    },
-    "ERPCov + FgMDM": {
-      "eval_accuracy": 0.65,
-      "eval_kappa": 0.3
-    },
-    "ERPCov + CSP + TS + PCA + LR": {
-      "eval_accuracy": 0.825,
-      "eval_kappa": 0.65
-    },
-    "ERPCov + TSLR": {
-      "eval_accuracy": 0.6,
-      "eval_kappa": 0.2
-    },
-    "XdawnCov + TSLR": {
+    "CovTG + DNNbbb": {
       "eval_accuracy": 0.575,
       "eval_kappa": 0.15
     },
-    "XdawnCov + FgMDM": {
-      "eval_accuracy": 0.5,
-      "eval_kappa": 0.0
+    "CovTG + DNNbbbb": {
+      "eval_accuracy": 0.525,
+      "eval_kappa": 0.05
     },
-    "CSP + TS + PCA + LR": {
-      "eval_accuracy": 0.9,
-      "eval_kappa": 0.8
+    "CovTG + DNNbbbbb": {
+      "eval_accuracy": 0.55,
+      "eval_kappa": 0.1
+    }
+  },
+  "subject_3": {
+    "Cov + basic_DNN": {
+      "eval_accuracy": 0.425,
+      "eval_kappa": -0.15
     },
-    "XdawnCov + CSP + TS + PCA + LR": {
-      "eval_accuracy": 0.825,
-      "eval_kappa": 0.65
+    "CovTG + DNNb": {
+      "eval_accuracy": 0.75,
+      "eval_kappa": 0.5
     },
-    "EEGNet": {
+    "CovTG + DNNbb": {
+      "eval_accuracy": 0.675,
+      "eval_kappa": 0.35
+    },
+    "CovTG + DNNbbb": {
+      "eval_accuracy": 0.75,
+      "eval_kappa": 0.5
+    },
+    "CovTG + DNNbbbb": {
+      "eval_accuracy": 0.65,
+      "eval_kappa": 0.3
+    },
+    "CovTG + DNNbbbbb": {
+      "eval_accuracy": 0.725,
+      "eval_kappa": 0.45
+    }
+  },
+  "subject_4": {
+    "Cov + basic_DNN": {
+      "eval_accuracy": 0.6,
+      "eval_kappa": 0.2
+    },
+    "CovTG + DNNb": {
+      "eval_accuracy": 0.75,
+      "eval_kappa": 0.5
+    },
+    "CovTG + DNNbb": {
+      "eval_accuracy": 0.75,
+      "eval_kappa": 0.5
+    },
+    "CovTG + DNNbbb": {
+      "eval_accuracy": 0.75,
+      "eval_kappa": 0.5
+    },
+    "CovTG + DNNbbbb": {
+      "eval_accuracy": 0.8,
+      "eval_kappa": 0.6
+    },
+    "CovTG + DNNbbbbb": {
+      "eval_accuracy": 0.75,
+      "eval_kappa": 0.5
+    }
+  },
+  "subject_5": {
+    "Cov + basic_DNN": {
+      "eval_accuracy": 0.65,
+      "eval_kappa": 0.3
+    },
+    "CovTG + DNNb": {
+      "eval_accuracy": 0.575,
+      "eval_kappa": 0.15
+    },
+    "CovTG + DNNbb": {
+      "eval_accuracy": 0.6,
+      "eval_kappa": 0.2
+    },
+    "CovTG + DNNbbb": {
+      "eval_accuracy": 0.575,
+      "eval_kappa": 0.15
+    },
+    "CovTG + DNNbbbb": {
+      "eval_accuracy": 0.625,
+      "eval_kappa": 0.25
+    },
+    "CovTG + DNNbbbbb": {
       "eval_accuracy": 0.65,
       "eval_kappa": 0.3
     }

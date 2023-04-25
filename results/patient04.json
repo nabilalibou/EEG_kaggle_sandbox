@@ -88,5 +88,37 @@
   "XdawnCov + FgMDM": {
     "eval_accuracy": 0.6,
     "eval_kappa": 0.2
+  },
+  "Cov + basic_DNN": {
+    "eval_accuracy": 0.6,
+    "eval_kappa": 0.2
+  },
+  "CovTG + DNNb": {
+    "eval_accuracy": 0.75,
+    "eval_kappa": 0.5
+  },
+  "CovTG + DNNbb": {
+    "eval_accuracy": 0.75,
+    "eval_kappa": 0.5
+  },
+  "CovTG + DNNbbb": {
+    "eval_accuracy": 0.75,
+    "eval_kappa": 0.5
+  },
+  "CovTG + DNNbbbb": {
+    "eval_accuracy": 0.8,
+    "eval_kappa": 0.6
+  },
+  "CovTG + DNNbbbbb": {
+    "eval_accuracy": 0.75,
+    "eval_kappa": 0.5
+  },
+  "Cov + DNNb": {
+    "eval_accuracy": 0.55,
+    "eval_kappa": 0.1
+  },
+  "CovTG + DNNb_2d": {
+    "eval_accuracy": 0.825,
+    "eval_kappa": 0.65
   }
 }

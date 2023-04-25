@@ -78,5 +78,37 @@
   "XdawnCov + CSP + TS + PCA + LR": {
     "eval_accuracy": 0.75,
     "eval_kappa": 0.5
+  },
+  "Cov + basic_DNN": {
+    "eval_accuracy": 0.7,
+    "eval_kappa": 0.4
+  },
+  "CovTG + DNNb": {
+    "eval_accuracy": 0.8,
+    "eval_kappa": 0.6
+  },
+  "CovTG + DNNbb": {
+    "eval_accuracy": 0.725,
+    "eval_kappa": 0.45
+  },
+  "CovTG + DNNbbb": {
+    "eval_accuracy": 0.75,
+    "eval_kappa": 0.5
+  },
+  "CovTG + DNNbbbb": {
+    "eval_accuracy": 0.725,
+    "eval_kappa": 0.45
+  },
+  "CovTG + DNNbbbbb": {
+    "eval_accuracy": 0.8,
+    "eval_kappa": 0.6
+  },
+  "Cov + DNNb": {
+    "eval_accuracy": 0.75,
+    "eval_kappa": 0.5
+  },
+  "CovTG + DNNb_2d": {
+    "eval_accuracy": 0.8,
+    "eval_kappa": 0.6
   }
 }
