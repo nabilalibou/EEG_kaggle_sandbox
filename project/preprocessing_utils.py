@@ -42,9 +42,7 @@ def prepare_data(raw_data, raw_labels, sample_rate, t_low, t_high=0):
     if t_high == 0:
         X = raw_data[:, :, int(round(sample_rate * t_low)) :]
     else:
-        X = raw_data[
-            :, :, int(round(sample_rate * t_low)) : int(round(sample_rate * t_high))
-        ]
+        X = raw_data[:, :, int(round(sample_rate * t_low)) : int(round(sample_rate * t_high))]
 
     y = np.squeeze(raw_labels) - 1  # remove useless dimension and change labels to 0/1
     # y = raw_labels.ravel() #  view of the original array

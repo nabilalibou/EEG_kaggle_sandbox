@@ -82,9 +82,7 @@ def write_final_report(results_list, report_path):
                     if pipeline not in dict_all["average"]:
                         dict_all["average"][pipeline] = {}
                     for score_name, value in scores_value.items():
-                        dict_all[f"subject_{subj}"][pipeline][score_name] = round(
-                            np.mean(value), 3
-                        )
+                        dict_all[f"subject_{subj}"][pipeline][score_name] = round(np.mean(value), 3)
                         if score_name not in dict_all["average"][pipeline].keys():
                             dict_all["average"][pipeline][score_name] = 0
                         dict_all["average"][pipeline][score_name] += np.mean(value)
@@ -117,8 +115,7 @@ def save_barplot(scores_results_dict, methods, subj_nbr, fig_dir, mode):
         # To space out each x points
         # ax_xx = [width*(len(scores_results_dict)*i + counter) for i in x]
         ax_x = (
-            x * (len(scores_results_dict) * (1 + bar_width / 2)) * bar_width
-            + bar_width * counter
+            x * (len(scores_results_dict) * (1 + bar_width / 2)) * bar_width + bar_width * counter
         )
         rects_list.append(
             ax.bar(

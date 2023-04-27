@@ -98,7 +98,8 @@ results as well.
 + Add cross-subject mode (train on 8 subjects and predict the labels of the last two).
 
 
-+ Add others dataset to play with.
++ Add others dataset to play with (BCI Competition IV 2a, 2b as they are popular in 
+literature).
 
 
 

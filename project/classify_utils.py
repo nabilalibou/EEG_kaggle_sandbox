@@ -13,7 +13,6 @@ from sklearn.metrics import (
     ConfusionMatrixDisplay,
 )
 from sklearn.utils import shuffle
-from tensorflow import keras
 from project.constants import *
 
 
@@ -22,13 +21,11 @@ def cross_val(clf_dict, X, y, score_dict, n_folds=5, return_train_score=False):
     Use cross_validate instead of cross_val_score because we will use multiple score
     metrics.
     Note that this function can optionally return the training score with the test score.
-    Use Kfold because no need of stratified as the labels are balances (when giving all
+    Use Kfold instead of stratified as the labels are balances (when giving all
     the trials). Shuffled = True so it will shuffle at the beginning and then no more
     (not like ShuffleSplit) so no data overlap.
     :return:
     """
-
-    # https://scikit-learn.org/stable/modules/model_evaluation.html#common-cases-predefined-values
     available_scorers = get_scorer_names()
     for score, score_val in score_dict.items():
         if score in available_scorers:
@@ -63,11 +60,11 @@ def cross_val(clf_dict, X, y, score_dict, n_folds=5, return_train_score=False):
 
 
 def custom_cross_val(clf_dict, X, y, score_dict, n_folds=5):
+
     # If no Cross-validation iterators defined:
     # X_train, X_test, y_train, y_test = train_test_split(X, y, shuffle=True,
     # test_size=0.3) #small dataset
-    # "https://towardsdatascience.com/" \
-    # "train-test-split-and-cross-validation-in-python-80b61beca4b6"
+
     kf = KFold(n_folds, shuffle=True)  # Kfold nice for small dataset
     # kf = StratifiedKFold(n_folds, shuffle=True)
     res_dict = {}
@@ -95,7 +92,7 @@ def custom_cross_val(clf_dict, X, y, score_dict, n_folds=5):
     return res_dict
 
 
-def evaluate(clf_dict, X, y, score_dict, X_eval, y_eval, num_runs=5, num_epochs=300):
+def evaluate(clf_dict, X, y, score_dict, X_eval, y_eval, num_runs=5):
     """
     Train on whole dataset
     (
@@ -139,9 +136,7 @@ def evaluate(clf_dict, X, y, score_dict, X_eval, y_eval, num_runs=5, num_epochs=
                 print(f"y_pred:\n{y_avg}")
                 print(f"y_eval:\n{y_eval}")
                 for score_name, scorer in score_dict.items():
-                    res_dict[clf_name][f"eval_{score_name}"] = round(
-                        scorer(y_eval, y_avg), 3
-                    )
+                    res_dict[clf_name][f"eval_{score_name}"] = round(scorer(y_eval, y_avg), 3)
                     print(f"{score_name}: {round(scorer(y_eval, y_avg), 3)}")
 
     return res_dict

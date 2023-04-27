@@ -19,59 +19,48 @@ class Squeeze(BaseEstimator, TransformerMixin):
         return self
 
     def transform(self, X, y=None):
-        X_ = X.copy()
-        X_ = np.squeeze(X.copy())
-        # print(np.shape(X_))
-        return X_
+        return np.squeeze(X)
 
 
-def basic_DNN(
-    num_chans=32, samples=256, num_hidden=16, activation="relu", learning_rate=1e-3
-):
+def basic_DNN(num_chans=32, samples=256, num_hidden=16, activation="relu", learning_rate=1e-3):
     model = tf.keras.Sequential()
-    model.add(tf.keras.layers.Flatten(input_shape=(num_chans, samples, 1)))
+    model.add(tf.keras.layers.Flatten(input_shape=(num_chans, samples)))
     model.add(layers.Dense(num_hidden, activation=activation))
     model.add(layers.Dense(1, activation="sigmoid"))
 
     optimizer = tf.keras.optimizers.Adam(learning_rate=learning_rate)
-    model.compile(
-        loss="binary_crossentropy", optimizer=optimizer, metrics=["binary_accuracy"]
-    )
+    model.compile(loss="binary_crossentropy", optimizer=optimizer, metrics=["binary_accuracy"])
     return model
 
 
-def basic_DNN2d(input_shape=32, num_hidden=16, activation="relu", learning_rate=1e-3):
+def basic_DNN1d(input_shape=32, num_hidden=16, activation="relu", learning_rate=1e-3):
     model = tf.keras.Sequential()
     model.add(layers.Input(shape=(input_shape,)))
     model.add(layers.Dense(num_hidden, activation=activation))
     model.add(layers.Dense(1, activation="sigmoid"))
 
     optimizer = tf.keras.optimizers.Adam(learning_rate=learning_rate)
-    model.compile(
-        loss="binary_crossentropy", optimizer=optimizer, metrics=["binary_accuracy"]
-    )
+    model.compile(loss="binary_crossentropy", optimizer=optimizer, metrics=["binary_accuracy"])
 
     return model
 
 
 def DNN(num_chans=32, samples=256, activation="relu", learning_rate=1e-3):
     model = tf.keras.Sequential()
-    model.add(tf.keras.layers.Flatten(input_shape=(num_chans, samples, 1)))
+    model.add(tf.keras.layers.Flatten(input_shape=(num_chans, samples)))
     model.add(layers.Dense(60, activation=activation))
     model.add(layers.Dense(30, activation=activation))
     model.add(layers.Dense(1, activation="sigmoid"))
 
     optimizer = tf.keras.optimizers.Adam(learning_rate=learning_rate)
-    model.compile(
-        loss="binary_crossentropy", optimizer=optimizer, metrics=["binary_accuracy"]
-    )
+    model.compile(loss="binary_crossentropy", optimizer=optimizer, metrics=["binary_accuracy"])
 
     return model
 
 
 def DNNb(num_chans=32, samples=256, activation="relu", learning_rate=1e-3):
     model = tf.keras.Sequential()
-    model.add(tf.keras.layers.Flatten(input_shape=(num_chans, samples, 1)))
+    model.add(tf.keras.layers.Flatten(input_shape=(num_chans, samples)))
     model.add(layers.Dense(32, activation=activation))
     model.add(tf.keras.layers.Dropout(0.5))
     model.add(layers.Dense(32, activation=activation))
@@ -81,14 +70,12 @@ def DNNb(num_chans=32, samples=256, activation="relu", learning_rate=1e-3):
     model.add(layers.Dense(1, activation="sigmoid"))
 
     optimizer = tf.keras.optimizers.Adam(learning_rate=learning_rate)
-    model.compile(
-        loss="binary_crossentropy", optimizer=optimizer, metrics=["binary_accuracy"]
-    )
+    model.compile(loss="binary_crossentropy", optimizer=optimizer, metrics=["binary_accuracy"])
 
     return model
 
 
-def DNNb_2d(input_shape=32, activation="relu", learning_rate=1e-3):
+def DNNb_1d(input_shape=32, activation="relu", learning_rate=1e-3):
     model = tf.keras.Sequential()
     model.add(layers.Input(shape=(input_shape,)))
     model.add(layers.Dense(32, activation=activation))
@@ -100,9 +87,7 @@ def DNNb_2d(input_shape=32, activation="relu", learning_rate=1e-3):
     model.add(layers.Dense(1, activation="sigmoid"))
 
     optimizer = tf.keras.optimizers.Adam(learning_rate=learning_rate)
-    model.compile(
-        loss="binary_crossentropy", optimizer=optimizer, metrics=["binary_accuracy"]
-    )
+    model.compile(loss="binary_crossentropy", optimizer=optimizer, metrics=["binary_accuracy"])
 
     return model
 
@@ -126,9 +111,7 @@ def SCNNa(num_chans=32, samples=256, learning_rate=1e-3):
     model.add(tf.keras.layers.Dense(1, activation="sigmoid"))
 
     optimizer = tf.keras.optimizers.Adam(learning_rate=learning_rate)
-    model.compile(
-        loss="binary_crossentropy", optimizer=optimizer, metrics=["binary_accuracy"]
-    )
+    model.compile(loss="binary_crossentropy", optimizer=optimizer, metrics=["binary_accuracy"])
     return model
 
 
@@ -138,9 +121,7 @@ def square(x):
 
 
 def log(x):
-    return tf.keras.backend.log(
-        tf.keras.backend.clip(x, min_value=1e-7, max_value=10000)
-    )
+    return tf.keras.backend.log(tf.keras.backend.clip(x, min_value=1e-7, max_value=10000))
 
 
 def SCNNb(num_chans=32, samples=256, learning_rate=1e-3, dropout_rate=0.5):
@@ -183,9 +164,7 @@ def SCNNb(num_chans=32, samples=256, learning_rate=1e-3, dropout_rate=0.5):
     )
 
     optimizer = tf.keras.optimizers.Adam(learning_rate=learning_rate)
-    model.compile(
-        loss="binary_crossentropy", optimizer=optimizer, metrics=["binary_accuracy"]
-    )
+    model.compile(loss="binary_crossentropy", optimizer=optimizer, metrics=["binary_accuracy"])
     return model
 
 
@@ -240,11 +219,7 @@ def eegnet(
     model.add(layers.Activation("elu"))
     model.add(layers.AveragePooling2D(pool_size=(1, P1), padding="valid"))
     model.add(layers.Dropout(dropout_rate))
-    model.add(
-        layers.SeparableConv2D(
-            F2, (1, int(kern_length / 2)), use_bias=False, padding="same"
-        )
-    )
+    model.add(layers.SeparableConv2D(F2, (1, int(kern_length / 2)), use_bias=False, padding="same"))
     model.add(layers.BatchNormalization())
     model.add(layers.Activation("elu"))
     P2 = int(P1 * 2)
@@ -255,9 +230,7 @@ def eegnet(
     model.add(layers.Activation("sigmoid"))
 
     optimizer = tf.keras.optimizers.Adam(learning_rate=learning_rate)
-    model.compile(
-        loss="binary_crossentropy", optimizer=optimizer, metrics=["binary_accuracy"]
-    )
+    model.compile(loss="binary_crossentropy", optimizer=optimizer, metrics=["binary_accuracy"])
 
     return model
 
@@ -314,11 +287,7 @@ def cust_eegnet(
     model.add(layers.AveragePooling2D(pool_size=(1, P1), padding="valid"))
     model.add(layers.Dropout(dropout_rate))
     F2 = F1 * D
-    model.add(
-        layers.SeparableConv2D(
-            F2, (1, int(kern_length / 2)), use_bias=False, padding="same"
-        )
-    )
+    model.add(layers.SeparableConv2D(F2, (1, int(kern_length / 2)), use_bias=False, padding="same"))
     model.add(layers.BatchNormalization())
     model.add(layers.Activation("elu"))
     P2 = int(P1 * 2)
@@ -329,8 +298,6 @@ def cust_eegnet(
     model.add(layers.Activation("sigmoid"))
 
     optimizer = tf.keras.optimizers.Adam(learning_rate=learning_rate)
-    model.compile(
-        loss="binary_crossentropy", optimizer=optimizer, metrics=["binary_accuracy"]
-    )
+    model.compile(loss="binary_crossentropy", optimizer=optimizer, metrics=["binary_accuracy"])
 
     return model

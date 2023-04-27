@@ -28,24 +28,31 @@ from project.display_result_utils import (
 
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
-os.environ[
-    "TF_CPP_MIN_LOG_LEVEL"
-] = "3"  # or any {'0', '1', '2'}, to filter out tf logs
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"  # or any {'0', '1', '2'}, to filter out tf logs
 
 data_path = "./data/"
 fig_dir = "./results/"
-number_of_subject = 1  # 8
+number_of_subject = 8  # 8
 mode = "eval"  # test or eval
 doCustomCV = False  # use cross_val() or custom_cross_val()
 
 # See constants.py
-# clf_selection = ["CSP + Log-reg", "CSP + LDA", "Cov + TSLR", "Cov + TSLDA", "CSP + TSLDA"
-#                  "CSP + TSLR", "Cov + FgMDM", "ERPCov + FgMDM", "ERPCov + CSP + TS + PCA + LR",
-#                  "ERPCov + TSLR", "XdawnCov + TSLR", "XdawnCov + FgMDM", "Cov + FgMDM",
-#                  "CSP + TS + PCA + LR", "XdawnCov + CSP + TS + PCA + LR", "EEGNet"]
-clf_selection = ["Cov + basic_DNN"]
+clf_selection = [
+    "CSP + KNN",
+    "CSP + Log-reg",
+    "CSP + LDA",
+    "CSP + RegLDA",
+    "Cov + TSLR",
+    "CSP + TSLR",
+    "Cov + FgMDM",
+    "CSP + TS + PCA + LR",
+    "CovTG + basic_DNN",
+    "CovTG + basic_DNN1d_16",
+    "CovTG + basic_DNN1d_24",
+    "CovTG + DNNb_1d",
+]
+
 score_selection = ["accuracy", "kappa"]
-score_selection = ["accuracy"]
 
 clf_dict = {}
 for clf in clf_selection:
@@ -121,21 +128,15 @@ for i in range(1, number_of_subject + 1):
         raw_eval_data, low_freq, high_freq, sample_rate, order=5
     )
     # Transpose EEG data and convert from uV to Volts ?
-    X, y = prepare_data(
-        raw_train_filtered, labels_train, sample_rate, t_low=-default_t_clf
-    )
-    X_eval, y_eval = prepare_data(
-        raw_eval_filtered, labels_eval, sample_rate, t_low=-default_t_clf
-    )
+    X, y = prepare_data(raw_train_filtered, labels_train, sample_rate, t_low=-default_t_clf)
+    X_eval, y_eval = prepare_data(raw_eval_filtered, labels_eval, sample_rate, t_low=-default_t_clf)
 
     if mode == "test":
         if doCustomCV:
             results_dict_customcv = custom_cross_val(clf_dict, X, y, score_dict, 5)
             results_dict = results_dict_customcv
         else:
-            results_dict_cv = cross_val(
-                clf_dict, X, y, score_dict, 5, return_train_score
-            )
+            results_dict_cv = cross_val(clf_dict, X, y, score_dict, 5, return_train_score)
             results_dict = results_dict_cv
     else:
         results_dict_eval = evaluate(clf_dict, X, y, score_dict, X_eval, y_eval)
@@ -153,4 +154,4 @@ for i in range(1, number_of_subject + 1):
         subj_nbr, results_dict, mode, return_train_score=False
     )
 
-    save_barplot(scores_results_dict, methods, subj_nbr, fig_dir, mode)
+    # save_barplot(scores_results_dict, methods, subj_nbr, fig_dir, mode)

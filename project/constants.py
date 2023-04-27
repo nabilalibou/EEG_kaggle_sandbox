@@ -172,34 +172,24 @@ all_clf_dict = {
         Vectorizer(), LinearDiscriminantAnalysis(shrinkage="auto", solver="eigen")
     ),
     "CSP + KNN": make_pipeline(CSP(n_components=4, log=True), KNeighborsClassifier()),
-    "CSP + Log-reg": make_pipeline(
-        CSP(n_components=4, log=True), LogisticRegression(max_iter=100)
-    ),
+    "CSP + Log-reg": make_pipeline(CSP(n_components=4, log=True), LogisticRegression(max_iter=100)),
     "RegCSP + Log-reg": make_pipeline(
         CSP(n_components=4, reg="ledoit_wolf", log=True), LogisticRegression()
     ),
-    "CSP + LinSVM": make_pipeline(
-        CSP(n_components=4, log=True), LinearSVC(random_state=0)
-    ),
+    "CSP + LinSVM": make_pipeline(CSP(n_components=4, log=True), LinearSVC(random_state=0)),
     "CSP + kerSVM": make_pipeline(CSP(n_components=4, log=True), SVC()),
-    "CSP + LDA": make_pipeline(
-        CSP(n_components=4, log=True), LinearDiscriminantAnalysis()
-    ),
+    "CSP + LDA": make_pipeline(CSP(n_components=4, log=True), LinearDiscriminantAnalysis()),
     "CSP + RegLDA": make_pipeline(
         CSP(n_components=4, log=True),
         LinearDiscriminantAnalysis(shrinkage="auto", solver="eigen"),
     ),
-    "Cov + MDM": make_pipeline(
-        Covariances(), MDM(metric=dict(mean="riemann", distance="riemann"))
-    ),
+    "Cov + MDM": make_pipeline(Covariances(), MDM(metric=dict(mean="riemann", distance="riemann"))),
     "Cov + FgMDM": make_pipeline(
         Covariances(), FgMDM(metric=dict(mean="riemann", distance="riemann"))
     ),
     "Cov + TSLR": make_pipeline(Covariances(), TangentSpace(), LogisticRegression()),
     "Cov + TSkerSVM": make_pipeline(Covariances(), TangentSpace(), SVC()),
-    "Cov + TSLDA": make_pipeline(
-        Covariances(), TangentSpace(), LinearDiscriminantAnalysis()
-    ),
+    "Cov + TSLDA": make_pipeline(Covariances(), TangentSpace(), LinearDiscriminantAnalysis()),
     "CSP + TSLDA": make_pipeline(
         Covariances(),
         covCSP(nfilter=4, log=False),
@@ -298,13 +288,12 @@ all_clf_dict = {
             verbose=False,
         )
     ),
-    "Cov + basic_DNN": make_pipeline(
+    "CovTG + basic_DNN": make_pipeline(
         Covariances(),
-        Expand(),
+        TangentSpace(),
         KerasClassifier(
-            model=basic_DNN,
-            num_chans=12,
-            samples=12,
+            model=basic_DNN1d,
+            input_shape=78,
             num_hidden=16,
             activation="relu",
             learning_rate=learning_rate,
@@ -313,43 +302,12 @@ all_clf_dict = {
             verbose=False,
         ),
     ),
-    "Cov + DNN": make_pipeline(
-        Covariances(),
-        Expand(),
-        KerasClassifier(
-            model=DNN,
-            num_chans=12,
-            samples=12,
-            activation="relu",
-            learning_rate=learning_rate,
-            epochs=num_epochs,
-            batch_size=batch_size,
-            verbose=False,
-        ),
-    ),
-    "Cov + DNNb": make_pipeline(
-        Covariances(),
-        Expand(),
-        KerasClassifier(
-            model=DNNb,
-            num_chans=12,
-            samples=12,
-            activation="relu",
-            learning_rate=learning_rate,
-            epochs=num_epochs,
-            batch_size=batch_size,
-            verbose=False,
-        ),
-    ),
-    "Cov + basic_DNN": make_pipeline(
+    "CovTG + basic_DNN1d_16": make_pipeline(
         Covariances(),
         TangentSpace(),
-        Expand(),
         KerasClassifier(
-            model=basic_DNN,
-            num_chans=78,
-            samples=16,
-            num_hidden=16,
+            model=basic_DNN1d,
+            input_shape=78,
             activation="relu",
             learning_rate=learning_rate,
             epochs=num_epochs,
@@ -357,14 +315,12 @@ all_clf_dict = {
             verbose=False,
         ),
     ),
-    "CovTG + basic_DNN2d_16": make_pipeline(
+    "CovTG + basic_DNN1d_24": make_pipeline(
         Covariances(),
         TangentSpace(),
-        Expand(),
         KerasClassifier(
-            model=basic_DNN2d,
-            num_chans=78,
-            samples=16,
+            model=basic_DNN1d,
+            input_shape=78,
             activation="relu",
             learning_rate=learning_rate,
             epochs=num_epochs,
@@ -372,28 +328,12 @@ all_clf_dict = {
             verbose=False,
         ),
     ),
-    "CovTG + basic_DNN2d_24": make_pipeline(
+    "CovTG + DNNb_1d": make_pipeline(
         Covariances(),
         TangentSpace(),
-        Expand(),
         KerasClassifier(
-            model=basic_DNN2d,
-            num_chans=78,
-            samples=24,
-            activation="relu",
-            learning_rate=learning_rate,
-            epochs=num_epochs,
-            batch_size=batch_size,
-            verbose=False,
-        ),
-    ),
-    "CovTG + DNNb_2d": make_pipeline(
-        Covariances(),
-        TangentSpace(),
-        Expand(),
-        KerasClassifier(
-            model=DNNb_2d,
-            num_chans=78,
+            model=DNNb_1d,
+            input_shape=78,
             activation="relu",
             learning_rate=learning_rate,
             epochs=num_epochs,
@@ -413,54 +353,5 @@ all_clf_dict = {
             batch_size=batch_size,
             verbose=False,
         ),
-    ),
-    "Cov + SCNNb": make_pipeline(
-        Covariances(),
-        Expand(),
-        KerasClassifier(
-            model=SCNNb,
-            num_chans=12,
-            samples=12,
-            learning_rate=learning_rate,
-            dropout_rate=dropout_rate,
-            epochs=num_epochs,
-            batch_size=batch_size,
-            verbose=False,
-        ),
-    ),
-    "Cov + EEGNet": make_pipeline(
-        Covariances(),
-        Expand(),
-        KerasClassifier(
-            model=eegnet,
-            num_chans=80,
-            samples=78,
-            dropout_rate=dropout_rate,
-            F1=8,
-            D=2,
-            P1=4,
-            learning_rate=learning_rate,
-            epochs=num_epochs,
-            batch_size=batch_size,
-            verbose=False,
-        ),
-    ),
-    "CovTG + EEGNet": make_pipeline(
-        Covariances(),
-        Expand(),
-        KerasClassifier(
-            model=eegnet,
-            num_chans=80,
-            samples=78,
-            dropout_rate=dropout_rate,
-            sampling_rate=default_sample_rate,
-            F1=8,
-            D=2,
-            P1=4,
-            learning_rate=learning_rate,
-            epochs=num_epochs,
-            batch_size=batch_size,
-            verbose=False,
-        ),
-    ),
+    )
 }
