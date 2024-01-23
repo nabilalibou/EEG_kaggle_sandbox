@@ -10,7 +10,7 @@ interface.
 
 ### Installing & run it
 ```
-git clone https://github.com/Nabil-AL/eeg-clf_sandbox.git
+git clone https://github.com/nabilalibou/eeg-clf_sandbox.git
 pip install -r requirements.txt
 cd eeg-clf_sandbox/project
 python3 wcci_2020.py
