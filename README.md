@@ -29,7 +29,7 @@ python3 wcci_2020.py
 
 ## Dataset available:
 
-### Motor-Imagery Dataset
+### Clinical BCI Challenge WCCI-2020: Motor-Imagery Dataset
 
 Motor Imagery dataset from the Clinical BCI Challenge WCCI-2020. It consists of EEG brain imaging data for 
 10 hemiparetic stroke patients having hand functional disability.  
