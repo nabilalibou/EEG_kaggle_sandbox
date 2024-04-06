@@ -1,10 +1,21 @@
-# Brain signals classification sandbox
+# Brain signals classification for Kaggle challenges
 
-Repository used to test and explore several preprocessing/classification pipelines on 
-brain signals (EEG/EMG/MEG datasets). Eventually, several dozen preprocessing pipeline and 
-classification pipeline combinations will be available. It will then be possible to test 
-them as well as to play with their parameters and hyperparameters through a command line
-interface.
+This project explores and evaluates various preprocessing and classification pipelines for 
+brain signal analysis (EEG, EMG, MEG) datasets from Kaggle challenges. The goal is to achieve 
+competitive performance on these challenges using custom-designed processing and classification pipelines.
+
+**Project Scope**
+- Implement a diverse set of preprocessing techniques suitable for brain signal data.
+- Develop and explore different classification pipelines utilizing various machine learning algorithms.
+- Benchmark these pipelines against top performers in Kaggle challenges involving brain signals.
+
+**Future Development**
+- Add intra-subject performance evaluation (with leave-one-out cross-validation).
+- Implement hyperparameter tuning possibilities to further optimize the performance of the pipelines.
+- Expand the project to include several dozen preprocessing and classification pipeline combinations.
+- Design a command-line interface (CLI) for easy testing and parameter tuning of these pipelines.
+- Integrate additional datasets for broader experimentation, including popular choices like BCI Competition
+IV 2a and 2b datasets frequently referenced in research literature.
 
 ## How to Run it?
 
@@ -85,24 +96,4 @@ best results.
 
 => Geodesic filtering achieved in tangent space with a Linear Discriminant Analysis applied 
 on spatial covariances before a classification with Minimum Distance to Mean gave good 
-results as well.  
-
-
-### Future improvements:
-
-<em>
-
-+ Implement Hyperparameter tuning possibilities.  
-
-
-+ Add cross-subject mode (train on 8 subjects and predict the labels of the last two).
-
-
-+ Add others dataset to play with (BCI Competition IV 2a, 2b as they are popular in 
-literature).
-
-
-
-
-
-
+results as well.
