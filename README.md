@@ -31,7 +31,7 @@ python3 wcci_2020.py
 
 ### Clinical BCI Challenge WCCI-2020: Motor-Imagery Dataset
 
-Motor Imagery dataset from the Clinical BCI Challenge WCCI-2020. It consists of EEG brain imaging data for 
+Motor Imagery dataset from the [Clinical BCI Challenge WCCI-2020](https://sites.google.com/view/bci-comp-wcci/). It consists of EEG brain imaging data for 
 10 hemiparetic stroke patients having hand functional disability.  
 The signals were recorded with 12 electrodes, sampled at 512 Hz and initially filtered with 0.1 to 100 Hz 
 pass-band filter and a notch filter at 50 Hz. [Dataset Link](https://github.com/5anirban9/Clinical-Brain-Computer-Interfaces-Challenge-WCCI-2020-Glasgow)  
@@ -52,10 +52,10 @@ available:
 <ins>Score metrics</ins>: accuracy, precision, roc auc, Cohen’s kappa.  
 
 <ins>Classification methods</ins>:  
-Classics ones: LDA (+shrinkage), SVM, kNN, linear regression (+shrinkage), MDM.  
-Artificial neural networks: ShallowConvNet, EEGNet and DNN.  
-Possibilities of spatial filtering (CSP, geodesic filtering etc) dimension reduction (PCA)
-and feature extraction (ex: for covariance-based classification using Riemannian geometry). 
+The Classics: LDA (+shrinkage), SVM, kNN, linear regression (+shrinkage), MDM.  
+Artificial Neural Networks: ShallowConvNet, EEGNet and DNN.  
+Spatial filtering (CSP, geodesic filtering etc), Dimension reduction (PCA)
+and Feature extraction (ex: for covariance-based classification using Riemannian geometry). 
 
 ### Results:
 
@@ -69,7 +69,12 @@ console, reported in a JSON file and plotted on a grouped bar plot like this one
 The program also produces a json file <em>'final_report.json'</em> containing the scores 
 of each method classification averaged for all patients.  
 
-#### Clinical BCI Challenge WCCI-2020 Dataset baseline results
+#### Clinical BCI Challenge WCCI-2020 Dataset results
+
+Top 3 Competition results for Within-subject (accuracy %): 78.44, 74.69, 73.75.
+
+*Note: these results were obtained without having access to the truth in the field, unlike me,
+who was able to optimize based on this.*
 
 Top 3 model for classification within subject:
 
