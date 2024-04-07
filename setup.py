@@ -1,12 +1,12 @@
 from setuptools import find_packages, setup
 
 setup(
-    name="eeg_clf_sandbox",
+    name="EEG_kaggle_sandbox",
     version="0.0.1",
-    url="https://github.com/Nabil-AL/eeg-clf_sandbox.git",
+    url="https://github.com/nabilalibou/EEG_kaggle_sandbox.git",
     packages=find_packages(),
     license="MIT",
-    author="Nabil AL",
-    description="Repository used to test several preprocessing/classification pipelines "
-    "on brain signals (EEG/EMG/MEG datasets).",
+    author="Nabil ALIBOU",
+    description="Repository used to Exploring Brain Signal Processing Pipelines for 
+    Kaggle Challenges.",
 )
