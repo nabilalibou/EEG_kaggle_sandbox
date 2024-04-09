@@ -71,10 +71,11 @@ of each method classification averaged for all patients.
 
 #### Clinical BCI Challenge WCCI-2020 Dataset results
 
-Top 3 Competition results for Within-subject (accuracy %): 78.44, 74.69, 73.75.
+Top 3 Competition results for Within-subject:
+Accuracy (%): **78.44**, **74.69**, **73.75**.
+Kappa: **0.57**, **0.49**, **0.47**.
 
-*Note: these results were obtained without having access to the truth in the field, unlike me,
-who was able to optimize based on this.*
+*Note: these results were obtained without optimizing for ground truth.*
 
 Top 3 model for classification within subject:
 
